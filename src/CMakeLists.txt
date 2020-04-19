@@ -13,14 +13,13 @@ file(GLOB SOURCE_LIST CONFIGURE_DEPENDS
         "${FinalProject_SOURCE_DIR}/src/*.cc"
         "${FinalProject_SOURCE_DIR}/src/*.cpp")
 
-
 ci_make_library(
         LIBRARY_NAME mylibrary
         CINDER_PATH  ${CINDER_PATH}
         SOURCES      ${SOURCE_LIST}
         INCLUDES     "${FinalProject_SOURCE_DIR}/include"
         LIBRARIES
-        BLOCKS
+        BLOCKS      Cinder-OpenCV
 )
 
 # All users of this library will need at least C++14

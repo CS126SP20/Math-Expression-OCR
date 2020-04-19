@@ -1,4 +1,5 @@
 get_filename_component(CINDER_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../../../" ABSOLUTE)
+
 include("${CINDER_PATH}/proj/cmake/modules/cinderMakeApp.cmake")
 
 file(GLOB SOURCE_LIST CONFIGURE_DEPENDS
@@ -7,13 +8,13 @@ file(GLOB SOURCE_LIST CONFIGURE_DEPENDS
         "${FinalProject_SOURCE_DIR}/apps/*.cc"
         "${FinalProject_SOURCE_DIR}/apps/*.cpp")
 
-
+message(STATUS "Cinder path is" ${Cinder-OpenCV_DIR})
 ci_make_app(
     APP_NAME    cinder-myapp
     CINDER_PATH ${CINDER_PATH}
     SOURCES     ${SOURCE_LIST}
     LIBRARIES   mylibrary
-    BLOCKS
+    BLOCKS      Cinder-OpenCV
 )
 
 target_compile_features(cinder-myapp PRIVATE cxx_std_14)
