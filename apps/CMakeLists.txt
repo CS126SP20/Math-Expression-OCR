@@ -8,13 +8,12 @@ file(GLOB SOURCE_LIST CONFIGURE_DEPENDS
         "${FinalProject_SOURCE_DIR}/apps/*.cc"
         "${FinalProject_SOURCE_DIR}/apps/*.cpp")
 
-message(STATUS "Cinder path is" ${Cinder-OpenCV_DIR})
 ci_make_app(
     APP_NAME    cinder-myapp
     CINDER_PATH ${CINDER_PATH}
     SOURCES     ${SOURCE_LIST}
-    LIBRARIES   mylibrary
-    BLOCKS      Cinder-OpenCV
+    LIBRARIES   mylibrary opencv
+    BLOCKS
 )
 
 target_compile_features(cinder-myapp PRIVATE cxx_std_14)

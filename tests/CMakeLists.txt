@@ -12,8 +12,8 @@ ci_make_app(
         APP_NAME    test
         CINDER_PATH ${CINDER_PATH}
         SOURCES     ${SOURCE_LIST}
-        LIBRARIES   mylibrary catch2
-        BLOCKS      Cinder-OpenCV
+        LIBRARIES   mylibrary catch2 opencv
+        BLOCKS
 )
 
 target_compile_features(test PRIVATE cxx_std_14)

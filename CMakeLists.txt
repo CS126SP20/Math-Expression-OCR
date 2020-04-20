@@ -43,6 +43,8 @@ endif()
 
 # Docs only available if this is the main app
 find_package(Doxygen)
+
+
 if(Doxygen_FOUND)
     add_subdirectory(docs)
 else()
@@ -77,6 +79,7 @@ FetchContent_Declare(
     GIT_TAG        v2.11.1
 )
 
+
 # Adds catch2 library. This is a header only library.
 FetchContent_GetProperties(catch2)
 if(NOT catch2_POPULATED)
@@ -86,4 +89,9 @@ if(NOT catch2_POPULATED)
     target_include_directories(catch2 INTERFACE ${catch2_SOURCE_DIR}/single_include)
 endif()
 
+
 # Add more CMake libraries here ...
+find_package(OpenCV REQUIRED)
+add_library(opencv INTERFACE)
+include_directories(${OpenCV_INCLUDE_DIRS})
+target_link_libraries(opencv INTERFACE ${OpenCV_LIBS})
