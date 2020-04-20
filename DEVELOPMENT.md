@@ -1,7 +1,10 @@
 # Development 
 Week 1
 
-4/18/20 : Got CMake set up, project compiles properly.
+Got CMake set up, project compiles properly. I started out using the OpenCV cinder block, but then ran into a lot of issues with that. 
+The cinder block was very old and there wasn't a lot of support for it, so I switched to using the regular OpenCV library instead. I was able to compile the 
+OpenCV library and add it to my project.
+
 
 
 ---
