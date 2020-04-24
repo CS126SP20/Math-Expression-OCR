@@ -12,5 +12,5 @@ using cinder::app::RendererGl;
 namespace mylibrary {
 
 
-}  // namespace mylibrary
+}  // namespace ocr
 
