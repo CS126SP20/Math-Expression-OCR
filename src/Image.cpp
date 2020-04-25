@@ -5,6 +5,7 @@
 #include "ocr/Image.h"
 #include <opencv2/core/mat.hpp>
 #include <string>
+#include <vector>
 
 using std::string;
 using std::vector;

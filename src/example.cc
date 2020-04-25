@@ -1,6 +1,6 @@
 // Copyright (c) 2020 [Your Name]. All rights reserved.
 
-#include <mylibrary/example.h>
+#include <ocr/example.h>
 
 #include "../apps/my_app.h"
 #include <cinder/app/RendererGl.h>
