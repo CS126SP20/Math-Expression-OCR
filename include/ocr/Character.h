@@ -2,8 +2,8 @@
 // Created by Rohini Sharma on 4/23/20.
 //
 
-#ifndef FINALPROJECT_IMAGE_H
-#define FINALPROJECT_IMAGE_H
+#ifndef FINALPROJECT_CHARACTER_H
+#define FINALPROJECT_CHARACTER_H
 
 #include <opencv2/core/mat.hpp>
 #include <vector>
@@ -18,10 +18,11 @@ const double kThresholdMax = 255;
 const size_t kBlockSize = 11;
 const double kThresholdConstant = 2.0;
 
-class Image {
+class Character {
 
  public:
-  explicit Image(const string& filepath);
+  explicit Character(const string& filepath);
+  Character(const cv::Mat& mat);
   cv::Mat GetMatrix() const;
   vector<vector<cv::Point>> GetContours() const;
  private:
@@ -35,4 +36,4 @@ class Image {
 
 }
 
-#endif  // FINALPROJECT_IMAGE_H
+#endif  // FINALPROJECT_CHARACTER_H

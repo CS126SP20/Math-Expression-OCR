@@ -2,12 +2,13 @@
 // Created by Rohini Sharma on 4/23/20.
 //
 
-#include "ocr/Image.h"
+#include "ocr/Character.h"
+
 #include <filesystem>
 #include <iostream>
 #include <opencv2/imgcodecs.hpp>
-#include<opencv2/imgproc/imgproc.hpp>
-#include<opencv2/ml/ml.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
+#include <opencv2/ml/ml.hpp>
 #include <string>
 #include <vector>
 
@@ -19,7 +20,7 @@ namespace ocr {
 
 
 
-Image::Image(const string& filepath) {
+Character::Character(const string& filepath) {
   if (!exists(filepath)) {
     throw invalid_argument("Could not find image at path: " + filepath);
   }
@@ -29,15 +30,22 @@ Image::Image(const string& filepath) {
       cv::RETR_EXTERNAL, cv::CHAIN_APPROX_SIMPLE );
 }
 
-cv::Mat Image::GetMatrix() const {
+Character::Character(const cv::Mat& mat) {
+  img_mat_ = mat;
+  ProcessMatrix();
+  cv::findContours(img_mat_, img_contours_, v4iHierarchy,
+                   cv::RETR_EXTERNAL, cv::CHAIN_APPROX_SIMPLE );
+}
+
+cv::Mat Character::GetMatrix() const {
   return img_mat_;
 }
 
-vector<vector<cv::Point>> Image::GetContours() const {
+vector<vector<cv::Point>> Character::GetContours() const {
   return img_contours_;
 }
 
-void Image::ProcessMatrix() {
+void Character::ProcessMatrix() {
   cv::cvtColor(img_mat_, img_mat_, cv::COLOR_BGR2GRAY);
   cv::GaussianBlur(img_mat_, img_mat_,
       cv::Size(kSmoothingSize, kSmoothingSize), kSigmaX);

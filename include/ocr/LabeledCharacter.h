@@ -2,11 +2,12 @@
 // Created by Rohini Sharma on 4/28/20.
 //
 
-#ifndef FINALPROJECT_LABELLEDIMAGE_H
-#define FINALPROJECT_LABELLEDIMAGE_H
-#include <ocr/Image.h>
+#ifndef FINALPROJECT_LABELEDIMAGE_H
+#define FINALPROJECT_LABELEDIMAGE_H
+#include <ocr/Character.h>
+
 namespace ocr {
-enum class Labels {
+enum class Label {
   Zero,
   One,
   Two,
@@ -48,12 +49,14 @@ enum class Labels {
   Infinity
 };
 
-class LabelledImage : public Image {
+class LabeledImage : public Image {
  public:
+  LabeledImage(string& filepath, string& label);
+  Label GetLabel() const;
 
 
  private:
 };
 }
 
-#endif  // FINALPROJECT_LABELLEDIMAGE_H
+#endif  // FINALPROJECT_LABELEDIMAGE_H
