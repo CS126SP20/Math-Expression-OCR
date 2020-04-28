@@ -10,6 +10,7 @@
 
 using std::vector;
 using std::string;
+using ocr::Character;
 namespace ocr {
 
 const size_t kSmoothingSize = 5;
@@ -17,6 +18,7 @@ const double kSigmaX = 0;
 const double kThresholdMax = 255;
 const size_t kBlockSize = 11;
 const double kThresholdConstant = 2.0;
+
 
 class Character {
 
@@ -34,6 +36,10 @@ class Character {
   void ProcessMatrix();
 };
 
+struct LabeledCharacter {
+  Character character;
+  string label;
+};
 }
 
 #endif  // FINALPROJECT_CHARACTER_H

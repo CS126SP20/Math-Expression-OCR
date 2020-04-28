@@ -19,7 +19,6 @@ using std::invalid_argument;
 namespace ocr {
 
 
-
 Character::Character(const string& filepath) {
   if (!exists(filepath)) {
     throw invalid_argument("Could not find image at path: " + filepath);
@@ -32,7 +31,6 @@ Character::Character(const string& filepath) {
 
 Character::Character(const cv::Mat& mat) {
   img_mat_ = mat;
-  ProcessMatrix();
   cv::findContours(img_mat_, img_contours_, v4iHierarchy,
                    cv::RETR_EXTERNAL, cv::CHAIN_APPROX_SIMPLE );
 }
