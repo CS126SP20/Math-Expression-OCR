@@ -10,7 +10,6 @@
 
 using std::vector;
 using std::string;
-using ocr::Character;
 namespace ocr {
 
 const size_t kSmoothingSize = 5;

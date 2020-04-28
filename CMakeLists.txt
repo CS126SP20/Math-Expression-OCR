@@ -95,3 +95,6 @@ find_package(OpenCV REQUIRED)
 add_library(opencv INTERFACE)
 include_directories(${OpenCV_INCLUDE_DIRS})
 target_link_libraries(opencv INTERFACE ${OpenCV_LIBS})
+
+find_package(Boost)
+add_library(boost INTERFACE)
