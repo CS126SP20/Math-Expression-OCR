@@ -147,6 +147,6 @@ _deps
 # assets/*.db
 # assets/*.sqlite*
 assets/train
-assets/test
-assets/test_labels.txt
+assets/eval
+assets/eval_labels.txt
 assets/train_labels.txt
