@@ -14,13 +14,9 @@ namespace ocr {
 
 class Image {
  public:
-  Image();
-  Image(string filepath);
-  cv::Mat GetMatrix() const;
-  vector<vector<cv::Point>> GetContours() const;
+  explicit Image(const string& filepath);
  private:
   cv::Mat img_mat_;
-  vector<vector<cv::Point>> contours_;
 };
 
 }

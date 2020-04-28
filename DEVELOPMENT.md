@@ -5,6 +5,11 @@ Got CMake set up, project compiles properly. I started out using the OpenCV cind
 The cinder block was very old and there wasn't a lot of support for it, so I switched to using the regular OpenCV library instead. I was able to compile the 
 OpenCV library and add it to my project.
 
+Week 2
+
+I decided to pivot my project a little bit to focus on evaluating written mathematical expressions. I decided to use the 
+
+
 
 
 ---
