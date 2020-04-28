@@ -23,8 +23,12 @@ class Image {
  public:
   explicit Image(const string& filepath);
   cv::Mat GetMatrix() const;
+  vector<vector<cv::Point>> GetContours() const;
  private:
   cv::Mat img_mat_;
+  vector<vector<cv::Point>> img_contours_;
+  //TODO what is this
+  std::vector<cv::Vec4i> v4iHierarchy;
 
   void ProcessMatrix();
 };

@@ -8,7 +8,8 @@ OpenCV library and add it to my project.
 Week 2
 
 I decided to pivot my project a little bit to focus on evaluating written mathematical expressions. I decided to use the 
-
+CROHME mathematical symbol dataset. I first had to process the training data, as the dataset comes in the inkml format. I 
+converted these images to JPGs. I created an Image class to represent a single image.   
 
 
 

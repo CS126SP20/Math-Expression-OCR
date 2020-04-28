@@ -6,8 +6,8 @@
 #include <filesystem>
 #include <iostream>
 #include <opencv2/imgcodecs.hpp>
-#include<opencv2/highgui/highgui.hpp>
 #include<opencv2/imgproc/imgproc.hpp>
+#include<opencv2/ml/ml.hpp>
 #include <string>
 #include <vector>
 
@@ -25,10 +25,16 @@ Image::Image(const string& filepath) {
   }
   img_mat_ = cv::imread(filepath);
   ProcessMatrix();
+  cv::findContours(img_mat_, img_contours_, v4iHierarchy,
+      cv::RETR_EXTERNAL, cv::CHAIN_APPROX_SIMPLE );
 }
 
 cv::Mat Image::GetMatrix() const {
   return img_mat_;
+}
+
+vector<vector<cv::Point>> Image::GetContours() const {
+  return img_contours_;
 }
 
 void Image::ProcessMatrix() {
@@ -38,7 +44,7 @@ void Image::ProcessMatrix() {
   cv::adaptiveThreshold(img_mat_, img_mat_, kThresholdMax,
       cv::ADAPTIVE_THRESH_GAUSSIAN_C,
       cv::THRESH_BINARY, kBlockSize, kThresholdConstant);
-
 }
+
 
 }
