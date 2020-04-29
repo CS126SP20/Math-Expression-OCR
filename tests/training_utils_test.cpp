@@ -27,3 +27,9 @@ TEST_CASE("Valid paths") {
   string training_label = "../../../../../../tests/assets/test_labels.txt";
   REQUIRE(GetCharacters(training_imgs, training_label).size() == 5);
 }
+
+TEST_CASE("Exception thrown for too few labels") {
+  string training_imgs = "../../../../../../tests/assets/test_images/";
+  string training_label = "../../../../../../tests/assets/too_few_labels.txt";
+  REQUIRE_THROWS(GetCharacters(training_imgs, training_label));
+}
