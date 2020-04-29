@@ -13,7 +13,7 @@ using std::vector;
 using cv::Mat;
 
 namespace ocr {
-vector<LabeledCharacter> GetCharacters(const string& characters_dir,
+vector<LabeledCharacter> GetTrainingCharacters(const string& characters_dir,
     const string& label_file);
 
 Mat GetNumericalLabelsMat(const vector<LabeledCharacter>& training_chars);
