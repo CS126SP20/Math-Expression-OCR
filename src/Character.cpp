@@ -23,13 +23,13 @@ Character::Character(const string& filepath) {
   }
   img_mat_ = cv::imread(filepath);
   ProcessMatrix();
-  cv::findContours(img_mat_, img_contours_, v4iHierarchy,
+  cv::findContours(img_mat_, img_contours_, v4i_hierarchy,
       cv::RETR_EXTERNAL, cv::CHAIN_APPROX_SIMPLE );
 }
 
 Character::Character(const cv::Mat& mat) {
   img_mat_ = mat;
-  cv::findContours(img_mat_, img_contours_, v4iHierarchy,
+  cv::findContours(img_mat_, img_contours_, v4i_hierarchy,
                    cv::RETR_EXTERNAL, cv::CHAIN_APPROX_SIMPLE );
 }
 
