@@ -16,8 +16,8 @@ namespace ocr {
 vector<LabeledCharacter> GetCharacters(const string& characters_dir,
     const string& label_file);
 
-Mat GetNumericalLabelsMat(const vector<LabeledCharacter>& training_chars) const;
-Mat GetFlattenedImagesMat(const vector<LabeledCharacter>& training_chars) const;
+Mat GetNumericalLabelsMat(const vector<LabeledCharacter>& training_chars);
+Mat GetFlattenedImagesMat(const vector<LabeledCharacter>& training_chars);
 
 }
 

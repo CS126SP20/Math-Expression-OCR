@@ -12,12 +12,12 @@ using std::vector;
 
 namespace ocr {
 
-typedef boost::bimap<string, size_t> LabelMap;
+typedef boost::bimap<string, float> LabelMap;
 
 /**
  * Vector of values to create the label bimap from
  */
-vector<LabelMap::value_type> labels_vec{{"0", 0}, {"1", 1}, {"2", 2},
+static vector<LabelMap::value_type> labels_vec{{"0", 0}, {"1", 1}, {"2", 2},
                                         {"3", 3}, {"4", 4}, {"5", 5},
                                         {"6", 6}, {"7", 7}, {"8", 8},
                                         {"9", 9}, {"(", 10}, {")", 11},
@@ -39,7 +39,7 @@ vector<LabelMap::value_type> labels_vec{{"0", 0}, {"1", 1}, {"2", 2},
  * Left map has string as the key
  * Right map has numerical class as the key
  */
-LabelMap label_and_num_map_(labels_vec.begin(), labels_vec.end());
+static LabelMap label_and_num_map_(labels_vec.begin(), labels_vec.end());
 
 
 
