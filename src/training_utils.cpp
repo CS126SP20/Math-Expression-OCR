@@ -54,5 +54,15 @@ Mat GetNumericalLabelsMat(const vector<LabeledCharacter>& training_chars) {
   return numerical_labels_mat;
 }
 
+Mat GetFlattenedImagesMat(const vector<LabeledCharacter>& training_chars) {
+  Mat flattened_imgs;
+  for (LabeledCharacter character : training_chars) {
+    Mat single_img = character.character.GetMatrix().reshape(1,1);
+    flattened_imgs.push_back(single_img);
+  }
+  return flattened_imgs;
+
+}
+
 
 }

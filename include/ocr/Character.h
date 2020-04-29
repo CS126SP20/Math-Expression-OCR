@@ -17,7 +17,7 @@ const double kSigmaX = 0;
 const double kThresholdMax = 255;
 const size_t kBlockSize = 11;
 const double kThresholdConstant = 2.0;
-
+const size_t kResizeSideLength = 30;
 
 class Character {
 

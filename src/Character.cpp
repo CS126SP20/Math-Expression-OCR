@@ -48,6 +48,8 @@ void Character::ProcessMatrix() {
   cv::adaptiveThreshold(img_mat_, img_mat_, kThresholdMax,
       cv::ADAPTIVE_THRESH_GAUSSIAN_C,
       cv::THRESH_BINARY, kBlockSize, kThresholdConstant);
+  cv::resize(img_mat_, img_mat_,
+      cv::Size(kResizeSideLength, kResizeSideLength));
 }
 
 
