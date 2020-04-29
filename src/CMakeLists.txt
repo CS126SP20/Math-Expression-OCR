@@ -5,6 +5,7 @@
 get_filename_component(CINDER_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../../../" ABSOLUTE)
 include("${CINDER_PATH}/proj/cmake/modules/cinderMakeApp.cmake")
 include("${FinalProject_SOURCE_DIR}/cmake/make_cinder_library.cmake")
+include_directories(/usr/local/Cellar/boost/1.72.0_2/include/)
 
 
 file(GLOB SOURCE_LIST CONFIGURE_DEPENDS

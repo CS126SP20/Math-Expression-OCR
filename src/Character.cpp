@@ -5,10 +5,8 @@
 #include "ocr/Character.h"
 
 #include <filesystem>
-#include <iostream>
 #include <opencv2/imgcodecs.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
-#include <opencv2/ml/ml.hpp>
 #include <string>
 #include <vector>
 

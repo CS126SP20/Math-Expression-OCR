@@ -96,5 +96,10 @@ add_library(opencv INTERFACE)
 include_directories(${OpenCV_INCLUDE_DIRS})
 target_link_libraries(opencv INTERFACE ${OpenCV_LIBS})
 
-find_package(Boost)
-add_library(boost INTERFACE)
+#message(STATUS "path to dirs: ${Boost_INCLUDE_DIRS}")
+#add_library(Boost INTERFACE)
+include_directories(/usr/local/Cellar/boost/1.72.0_2/include/boost/)
+
+
+
+
