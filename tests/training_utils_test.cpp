@@ -19,5 +19,11 @@ TEST_CASE("Invalid file paths") {
     string training_label = "bad/path";
     REQUIRE_THROWS(GetCharacters(training_imgs, training_label));
   }
+}
 
+
+TEST_CASE("Valid paths") {
+  string training_imgs = "../../../../../../tests/assets/test_images/";
+  string training_label = "../../../../../../tests/assets/test_labels.txt";
+  REQUIRE(GetCharacters(training_imgs, training_label).size() == 5);
 }

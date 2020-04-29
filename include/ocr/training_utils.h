@@ -8,16 +8,11 @@
 #include <ocr/Character.h>
 #include <vector>
 
+using std::vector;
 
 namespace ocr {
-
-namespace helper_methods {
-bool IsValidPath(const string& file_path);
-
-}
-
-vector<Character> GetCharacters(const string& characters_dir, const string&);
-
+vector<LabeledCharacter> GetCharacters(const string& characters_dir,
+    const string& label_file);
 
 }
 
