@@ -3,12 +3,14 @@
 //
 
 #include "ocr/training_utils.h"
+#include <ocr/labels.h>
 #include <filesystem>
 #include <ocr/Character.h>
 #include <fstream>
 #include <istream>
 #include <vector>
 #include <iostream>
+#include<opencv2/core/core.hpp>
 
 using std::vector;
 using std::__fs::filesystem::exists;
@@ -16,6 +18,10 @@ using std::__fs::filesystem::directory_iterator;
 using std::ifstream;
 using std::invalid_argument;
 using ocr::LabeledCharacter;
+using ocr::label_and_num_map_;
+using cv::Mat;
+using cv::Mat1f;
+
 namespace ocr {
 
 vector<LabeledCharacter> GetCharacters(const string &characters_dir, const string& label_path) {
@@ -37,10 +43,14 @@ vector<LabeledCharacter> GetCharacters(const string &characters_dir, const strin
     created_characters.push_back(training_character);
   }
   return created_characters;
-
 }
 
-
-
-
+Mat GetNumericalLabelsMat(const vector<LabeledCharacter>& training_chars) const {
+  Mat numerical_labels;
+  for (LabeledCharacter character : training_chars) {
+    size_t numerical_label = labels_and_num_map.left.at(character.label);
+    numerical_labels.push_back_(Mat1f(1,1, numerical_label));
+  }
+  return numerical_labels;
+}
 }
