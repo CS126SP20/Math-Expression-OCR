@@ -14,6 +14,9 @@ namespace ocr {
 
 typedef boost::bimap<string, size_t> LabelMap;
 
+/**
+ * Vector of values to create the label bimap from
+ */
 vector<LabelMap::value_type> labels_vec{{"0", 0}, {"1", 1}, {"2", 2},
                                         {"3", 3}, {"4", 4}, {"5", 5},
                                         {"6", 6}, {"7", 7}, {"8", 8},
