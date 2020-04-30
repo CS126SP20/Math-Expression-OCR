@@ -23,7 +23,7 @@ using cv::Mat1f;
 
 namespace ocr {
 
-vector<LabeledCharacter> GetCharacters(const string &characters_dir, const string& label_path) {
+vector<LabeledCharacter> GetTrainingCharacters(const string &characters_dir, const string& label_path) {
   ifstream label_file(label_path);
   if (!exists(characters_dir) || !label_file.is_open()) {
     throw invalid_argument("Please check training image directory and label file paths and try again");
@@ -50,14 +50,18 @@ Mat GetNumericalLabelsMat(const vector<LabeledCharacter>& training_chars) {
     float numerical_label = ocr::label_and_num_map_.left.at(character.label);
     labels.push_back(numerical_label);
   }
-  Mat numerical_labels_mat(1, labels.size(), CV_32FC1, labels.data());
+  //TODO fix
+  Mat numerical_labels_mat(1, labels.size(), CV_32F, labels.data());
+  std::cout << numerical_labels_mat << std::endl;
   return numerical_labels_mat;
 }
 
 Mat GetFlattenedImagesMat(const vector<LabeledCharacter>& training_chars) {
   Mat flattened_imgs;
   for (LabeledCharacter character : training_chars) {
-    Mat single_img = character.character.GetMatrix().reshape(1,1);
+    Mat single_img;
+    character.character.GetMatrix().convertTo(single_img, CV_32F);
+    single_img = single_img.reshape(1,1);
     flattened_imgs.push_back(single_img);
   }
   return flattened_imgs;

@@ -19,6 +19,7 @@ class KNN_Model {
   KNN_Model();
   KNN_Model(const string& saved_model_path);
   void Train(const string& training_img_dir, const string& label_path);
+  void Save(const string& path) const;
 
   string ClassifyImage(const string& image_path);
 
@@ -28,7 +29,6 @@ class KNN_Model {
 
 
 };
-
 
 }
 
