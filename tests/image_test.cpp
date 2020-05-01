@@ -18,3 +18,9 @@ TEST_CASE("Blank image") {
   vector<Character> characters = blank.GetCharacters();
   REQUIRE(characters.size() == 0);
 }
+
+TEST_CASE("Single character image") {
+  Image nine("../../../../../../tests/assets/test_images/4.jpg");
+  vector<Character> characters = nine.GetCharacters();
+  REQUIRE(characters.size() == 1);
+}

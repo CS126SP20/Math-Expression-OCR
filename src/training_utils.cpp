@@ -54,7 +54,6 @@ vector<LabeledCharacter> GetTrainingCharacters(const string &characters_dir,
   }
   //TODO fix ?
   Mat numerical_labels_mat(1, labels.size(), CV_32F, labels.data());
-  std::cout << numerical_labels_mat << std::endl;
   return numerical_labels_mat;
 }
 

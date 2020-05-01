@@ -59,7 +59,7 @@ vector<vector<Point>> Image::GetValidContours() const {
 
 Mat Image::GetMatFromContour(const vector<Point>& contour) const {
   cv::Rect bounds = cv::boundingRect(contour);
-  cv::rectangle(image_mat_, bounds, cv::Scalar(100,0,0), 5);
+  cv::rectangle(image_mat_, bounds, cv::Scalar(100,0,0), 2);
   return image_mat_(bounds);
 }
 

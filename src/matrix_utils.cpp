@@ -6,6 +6,7 @@
 
 #include <opencv2/core.hpp>
 #include <opencv2/highgui.hpp>
+#include <opencv2/photo.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <vector>
 
@@ -17,7 +18,7 @@ namespace ocr {
 
 void ProcessMatrix(Mat& matrix, bool is_character_matrix) {
   cv::cvtColor(matrix, matrix, cv::COLOR_BGR2GRAY);
-
+  cv::fastNlMeansDenoising(matrix, matrix);
   cv::GaussianBlur(matrix, matrix,
                   cv::Size(kSmoothingSize, kSmoothingSize), kSigmaX);
   cv::adaptiveThreshold(matrix, matrix, kThresholdMax,
@@ -28,7 +29,11 @@ void ProcessMatrix(Mat& matrix, bool is_character_matrix) {
   cv::Sobel(matrix, sobel_x, CV_32F, 1,0);
   cv::Sobel(matrix, sobel_y, CV_32F, 0,1);
   cv::magnitude(sobel_x, sobel_y, matrix);
-  cv::normalize(matrix, matrix, 0, 255, cv::NORM_MINMAX, CV_8U);
+  cv::normalize(matrix, matrix, kNormAlpha, kNormBeta,
+      cv::NORM_MINMAX, CV_8U);
+
+  Mat kernel = Mat::ones(kDialationKernelSize,kDialationKernelSize, CV_8U);
+  cv::dilate(matrix,matrix,kernel);
 
   if (is_character_matrix) {
     cv::resize(matrix, matrix,

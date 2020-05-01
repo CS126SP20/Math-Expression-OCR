@@ -4,13 +4,15 @@
 
 #include "ocr/KNN_Model.h"
 #include <ocr/training_utils.h>
-#include <opencv2/ml/ml.hpp>
+#include <ocr/Image.h>
 #include <ocr/labels.h>
+#include <opencv2/ml/ml.hpp>
 
 using cv::ml::KNearest;
 using cv::Ptr;
 using ocr::GetNumericalLabelsMat;
 using ocr::GetFlattenedImagesMat;
+using ocr::Image;
 
 namespace ocr {
 
@@ -37,6 +39,16 @@ void KNN_Model::Save(const string &path) const {
   kNearest_model_->save(path);
 }
 
+string KNN_Model::ClassifyImage(const string& image_path) {
+    string all_labels;
+    Image image(image_path);
+    vector<Character> all_characters = image.GetCharacters();
+    for (Character character : all_characters) {
+      all_labels.append(ClassifySingleCharacter(character));
+    }
+    return all_labels;
+}
+
 
 
 
@@ -49,5 +61,6 @@ string KNN_Model::ClassifySingleCharacter(
   string label = label_and_num_map_.right.at(numerical_label);
   return label;
 }
+
 
 }
