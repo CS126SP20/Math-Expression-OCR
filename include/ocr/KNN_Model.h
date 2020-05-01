@@ -14,7 +14,7 @@ using ocr::Character;
 
 namespace ocr {
 
-const size_t kNumNearest = 1;
+const size_t kNumNearest = 40;
 
 class KNN_Model {
  public:

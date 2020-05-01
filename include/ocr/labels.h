@@ -32,7 +32,7 @@ static vector<LabelMap::value_type> labels_vec{{"0", 0}, {"1", 1}, {"2", 2},
                                         {"\\geq", 31}, {"\\gt", 32},
                                         {"\\leq", 33}, {"\\lt", 34},
                                         {"\\neq", 35}, {"\\div", 36},
-                                        {"\\int", 37}, {"\\inf", 38}};
+                                        {"\\int", 37}, {"\\infty", 38}};
 
 /**
  * Bimap containing labels as strings and numercial class of each label.

@@ -23,7 +23,7 @@ using cv::Mat1f;
 
 namespace ocr {
 
-vector<LabeledCharacter> GetTrainingCharacters(const string &characters_dir,
+vector<LabeledCharacter> GetLabeledCharacters(const string &characters_dir,
     const string& label_path) {
   ifstream label_file(label_path);
   if (!exists(characters_dir) || !label_file.is_open()) {
@@ -49,8 +49,10 @@ vector<LabeledCharacter> GetTrainingCharacters(const string &characters_dir,
  Mat GetNumericalLabelsMat(const vector<LabeledCharacter>& training_chars) {
   vector<float> labels;
   for (LabeledCharacter character : training_chars) {
-    float numerical_label = ocr::label_and_num_map_.left.at(character.label);
-    labels.push_back(numerical_label);
+
+      float numerical_label = ocr::label_and_num_map_.left.at(character.label);
+      labels.push_back(numerical_label);
+
   }
   //TODO fix ?
   Mat numerical_labels_mat(1, labels.size(), CV_32F, labels.data());

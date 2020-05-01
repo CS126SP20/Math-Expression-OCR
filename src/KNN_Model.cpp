@@ -3,12 +3,15 @@
 //
 
 #include "ocr/KNN_Model.h"
-#include <ocr/training_utils.h>
+
 #include <ocr/Image.h>
 #include <ocr/labels.h>
+#include <ocr/training_utils.h>
+
+#include <opencv2/imgproc.hpp>
 #include <opencv2/ml/ml.hpp>
 
-using cv::ml::KNearest;
+using cv::Ptr;
 using cv::Ptr;
 using ocr::GetNumericalLabelsMat;
 using ocr::GetFlattenedImagesMat;
@@ -25,10 +28,12 @@ KNN_Model::KNN_Model(const string& saved_model) {
 void KNN_Model::Train(const string& training_img_dir,
                       const string& label_path) {
   vector<LabeledCharacter> training_characters =
-      GetTrainingCharacters(training_img_dir, label_path);
+      GetLabeledCharacters(training_img_dir, label_path);
   Mat flattened_imgs = GetFlattenedImagesMat(training_characters);
   Mat labels = GetNumericalLabelsMat(training_characters);
+  std::cout << "Training model..." << std::endl;
   kNearest_model_->train(flattened_imgs, cv::ml::ROW_SAMPLE, labels);
+  std::cout << "Training complete!" << std::endl;
 }
 
 void KNN_Model::Save(const string& path) const {
@@ -61,13 +66,18 @@ double KNN_Model::EvaluateModel(vector<LabeledCharacter> labeled_chars) const {
     }
   }
 
+  std::cout << "size " << labeled_chars.size() << std::endl;
+  std::cout << "num correct" << num_correct << std::endl;
   return (num_correct / labeled_chars.size()) * 100;
 }
 
 string KNN_Model::ClassifySingleCharacter(
     const Character& character_to_classify) const {
   Mat results(0, 0, CV_32F);
-  Mat flattened_character_mat = character_to_classify.GetMatrix().reshape(1, 1);
+  Mat flattened_character_mat = character_to_classify.GetMatrix();
+  cv::resize(flattened_character_mat, flattened_character_mat, cv::Size(30,30));
+  flattened_character_mat = flattened_character_mat.reshape(1, 1);
+  flattened_character_mat.convertTo(flattened_character_mat, CV_32F);
   kNearest_model_->findNearest(flattened_character_mat, kNumNearest, results);
   float numerical_label = (float)results.at<float>(0, 0);
   string label = label_and_num_map_.right.at(numerical_label);

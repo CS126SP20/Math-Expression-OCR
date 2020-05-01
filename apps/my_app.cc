@@ -3,10 +3,10 @@
 #include "my_app.h"
 #include <cinder/app/App.h>
 #include <opencv2/highgui/highgui.hpp>
- #include <filesystem>
-#include <iostream>
-using std::cout;
+#include <ocr/KNN_Model.h>
+#include <filesystem>
 
+using ocr::KNN_Model;
 namespace myapp {
 using cinder::app::KeyEvent;
 
@@ -15,6 +15,7 @@ MyApp::MyApp() {
 }
 
 void MyApp::setup() {
+
 
 }
 
