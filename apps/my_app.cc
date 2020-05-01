@@ -15,8 +15,7 @@ MyApp::MyApp() {
 }
 
 void MyApp::setup() {
-  cv::Mat test_img = cv::imread("../../../../../../assets/plane.jpg");
-  cv::imshow("test_image", test_img);
+
 }
 
 void MyApp::update() {

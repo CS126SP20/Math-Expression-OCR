@@ -32,7 +32,6 @@ vector<Character> Image::GetCharacters() {
     Mat character_mat = GetMatFromContour(contour);
     characters_in_img.push_back(Character(character_mat));
   }
-  cv::imshow("Contours", image_mat_);
   cv::waitKey(0);
   return characters_in_img;
 }
@@ -45,7 +44,6 @@ vector<vector<Point>> Image::GetValidContours() const {
   vector<cv::Vec4i> v4i_hierarchy;
   cv::findContours(image_mat_copy, all_contours, cv::RETR_EXTERNAL,
       cv::CHAIN_APPROX_SIMPLE);
-  cv::imshow("contours", image_mat_copy);
   cv::waitKey(0);
   for (auto& contour : all_contours) {
     double area = cv::contourArea(contour);

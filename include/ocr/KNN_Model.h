@@ -20,14 +20,17 @@ class KNN_Model {
  public:
   KNN_Model();
   KNN_Model(const string& saved_model_path);
+
   void Train(const string& training_img_dir, const string& label_path);
   void Save(const string& path) const;
+  string ClassifyImage(const string& image_path) const;
+  double EvaluateModel(vector<LabeledCharacter> labeled_characters) const;
 
-  string ClassifyImage(const string& image_path);
+  bool IsTrained() const;
 
  private:
   cv::Ptr<KNearest> kNearest_model_;
-  string ClassifySingleCharacter(const Character& character_to_classify);
+  string ClassifySingleCharacter(const Character& character_to_classify) const;
 
 
 };

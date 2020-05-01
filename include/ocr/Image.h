@@ -18,7 +18,7 @@ using cv::Mat;
 
 namespace ocr {
 //TODO play with this number
-const size_t kMinContourArea = 400;
+const size_t kMinContourArea = 150;
 
 struct Contour {
   vector<Point> contour_points;
