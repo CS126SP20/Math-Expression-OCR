@@ -40,4 +40,14 @@ void KNN_Model::Save(const string &path) const {
 
 
 
+string KNN_Model::ClassifySingleCharacter(
+    const Character& character_to_classify) {
+  Mat results(0,0, CV_32F);
+  Mat flattened_character_mat = character_to_classify.GetMatrix().reshape(1,1);
+  kNearest_model_->findNearest(flattened_character_mat, kNumNearest, results);
+  float numerical_label = (float) results.at<float>(0,0);
+  string label = label_and_num_map_.right.at(numerical_label);
+  return label;
+}
+
 }

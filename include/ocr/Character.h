@@ -31,7 +31,6 @@ class Character {
   vector<vector<cv::Point>> img_contours_;
   //TODO what is this
   std::vector<cv::Vec4i> v4i_hierarchy;
-
   void ProcessMatrix();
 };
 
