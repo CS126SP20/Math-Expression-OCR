@@ -7,6 +7,7 @@
 #include <filesystem>
 #include <opencv2/imgcodecs.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
+#include <ocr/matrix_utils.h>
 #include <string>
 #include <vector>
 
@@ -14,43 +15,24 @@ using std::string;
 using std::vector;
 using std::__fs::filesystem::exists;
 using std::invalid_argument;
+using ocr::kResizeSideLength;
+
 namespace ocr {
 
 
 Character::Character(const string& filepath) {
   if (!exists(filepath)) {
-    throw invalid_argument("Could not find image at path: " + filepath);
+    throw invalid_argument("Could not find character at path: " + filepath);
   }
-  img_mat_ = cv::imread(filepath);
-  ProcessMatrix();
-  cv::findContours(img_mat_, img_contours_, v4i_hierarchy,
-      cv::RETR_EXTERNAL, cv::CHAIN_APPROX_SIMPLE );
+  character_mat_ = cv::imread(filepath);
+  ProcessMatrix(character_mat_, true);
 }
 
 Character::Character(const cv::Mat& mat) {
-  img_mat_ = mat;
-  cv::findContours(img_mat_, img_contours_, v4i_hierarchy,
-                   cv::RETR_EXTERNAL, cv::CHAIN_APPROX_SIMPLE );
+  character_mat_ = mat;
 }
 
 cv::Mat Character::GetMatrix() const {
-  return img_mat_;
+  return character_mat_;
 }
-
-vector<vector<cv::Point>> Character::GetContours() const {
-  return img_contours_;
-}
-
-void Character::ProcessMatrix() {
-  cv::cvtColor(img_mat_, img_mat_, cv::COLOR_BGR2GRAY);
-  cv::GaussianBlur(img_mat_, img_mat_,
-      cv::Size(kSmoothingSize, kSmoothingSize), kSigmaX);
-  cv::adaptiveThreshold(img_mat_, img_mat_, kThresholdMax,
-      cv::ADAPTIVE_THRESH_GAUSSIAN_C,
-      cv::THRESH_BINARY, kBlockSize, kThresholdConstant);
-  cv::resize(img_mat_, img_mat_,
-      cv::Size(kResizeSideLength, kResizeSideLength));
-}
-
-
 }

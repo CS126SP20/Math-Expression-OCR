@@ -1,0 +1,28 @@
+//
+// Created by Rohini Sharma on 4/30/20.
+//
+
+#ifndef FINALPROJECT_MATRIX_UTILS_H
+#define FINALPROJECT_MATRIX_UTILS_H
+
+#include <opencv2/core.hpp>
+#include <vector>
+
+using cv::Mat;
+using std::vector;
+
+namespace ocr {
+
+const size_t kSmoothingSize = 5;
+const double kSigmaX = 0;
+const double kThresholdMax = 255;
+const size_t kBlockSize = 11;
+const double kThresholdConstant = 2.0;
+const size_t kResizeSideLength = 30;
+
+void ProcessMatrix(Mat& matrix, bool is_character_mat);
+
+}
+
+
+#endif  // FINALPROJECT_MATRIX_UTILS_H

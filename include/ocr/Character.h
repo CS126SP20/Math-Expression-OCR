@@ -12,12 +12,7 @@ using std::vector;
 using std::string;
 namespace ocr {
 
-const size_t kSmoothingSize = 5;
-const double kSigmaX = 0;
-const double kThresholdMax = 255;
-const size_t kBlockSize = 11;
-const double kThresholdConstant = 2.0;
-const size_t kResizeSideLength = 30;
+
 
 class Character {
 
@@ -25,13 +20,8 @@ class Character {
   explicit Character(const string& filepath);
   Character(const cv::Mat& mat);
   cv::Mat GetMatrix() const;
-  vector<vector<cv::Point>> GetContours() const;
  private:
-  cv::Mat img_mat_;
-  vector<vector<cv::Point>> img_contours_;
-  //TODO what is this
-  std::vector<cv::Vec4i> v4i_hierarchy;
-  void ProcessMatrix();
+  cv::Mat character_mat_;
 };
 
 struct LabeledCharacter {

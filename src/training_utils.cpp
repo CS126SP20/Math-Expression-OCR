@@ -23,10 +23,12 @@ using cv::Mat1f;
 
 namespace ocr {
 
-vector<LabeledCharacter> GetTrainingCharacters(const string &characters_dir, const string& label_path) {
+vector<LabeledCharacter> GetTrainingCharacters(const string &characters_dir,
+    const string& label_path) {
   ifstream label_file(label_path);
   if (!exists(characters_dir) || !label_file.is_open()) {
-    throw invalid_argument("Please check training image directory and label file paths and try again");
+    throw invalid_argument("Please check training image directory and "
+                           "label file paths and try again");
   }
   string label_line;
   vector<LabeledCharacter> created_characters;
@@ -44,7 +46,7 @@ vector<LabeledCharacter> GetTrainingCharacters(const string &characters_dir, con
   return created_characters;
 }
 
-Mat GetNumericalLabelsMat(const vector<LabeledCharacter>& training_chars) {
+ Mat GetNumericalLabelsMat(const vector<LabeledCharacter>& training_chars) {
   vector<float> labels;
   for (LabeledCharacter character : training_chars) {
     float numerical_label = ocr::label_and_num_map_.left.at(character.label);
