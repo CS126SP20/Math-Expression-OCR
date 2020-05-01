@@ -9,7 +9,7 @@
 using ocr::Image;
 
 TEST_CASE("Single character image has one character") {
-  Image nine_image("../../../../../../tests/assets/sample1.png");
+  Image nine_image("../../../../../../tests/assets/sample_img.jpg");
   vector<Character> characters = nine_image.GetCharacters();
-  REQUIRE(characters.size() == 1);
+  REQUIRE(characters.size() == 5);
 }

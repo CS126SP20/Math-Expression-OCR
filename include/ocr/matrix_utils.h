@@ -14,7 +14,7 @@ using std::vector;
 namespace ocr {
 
 const size_t kSmoothingSize = 5;
-const double kSigmaX = 0;
+const double kSigmaX = 10;
 const double kThresholdMax = 255;
 const size_t kBlockSize = 11;
 const double kThresholdConstant = 2.0;
