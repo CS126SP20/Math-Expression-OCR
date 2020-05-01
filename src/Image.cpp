@@ -26,7 +26,13 @@ Image::Image(const string& path) {
 }
 
 vector<Character> Image::GetCharacters() {
-
+  vector<Character> characters_in_img;
+  vector<vector<Point>> contours = GetValidContours();
+  for (auto& contour : contours) {
+    Mat character_mat = GetMatFromContour(contour);
+    characters_in_img.push_back(Character(character_mat));
+  }
+  return characters_in_img;
 }
 
 
