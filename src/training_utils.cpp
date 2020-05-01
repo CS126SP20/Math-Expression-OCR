@@ -52,7 +52,7 @@ vector<LabeledCharacter> GetTrainingCharacters(const string &characters_dir,
     float numerical_label = ocr::label_and_num_map_.left.at(character.label);
     labels.push_back(numerical_label);
   }
-  //TODO fix
+  //TODO fix ?
   Mat numerical_labels_mat(1, labels.size(), CV_32F, labels.data());
   std::cout << numerical_labels_mat << std::endl;
   return numerical_labels_mat;
