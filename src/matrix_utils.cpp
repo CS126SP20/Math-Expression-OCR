@@ -24,8 +24,6 @@ void ProcessMatrix(Mat& matrix, bool is_character_matrix) {
                         cv::ADAPTIVE_THRESH_GAUSSIAN_C,
                         cv::THRESH_BINARY, kBlockSize,
                         kThresholdConstant);
-  cv::imshow("thresholded", matrix);
-  cv::waitKey(0);
   Mat sobel_x, sobel_y, magnitude;
   cv::Sobel(matrix, sobel_x, CV_32F, 1,0);
   cv::Sobel(matrix, sobel_y, CV_32F, 0,1);
