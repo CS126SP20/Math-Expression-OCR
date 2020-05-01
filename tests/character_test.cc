@@ -30,9 +30,4 @@ TEST_CASE("GetMatrix Test") {
   REQUIRE(cv::countNonZero(differences) == 0);
 }
 
-TEST_CASE("GetContours Test") {
-  //TODO add test
-  Mat simple_mat = Mat::eye(3,3,  CV_8UC1);
-  Character character(simple_mat);
-}
 
