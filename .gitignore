@@ -146,8 +146,4 @@ _deps
 # Don't track database files.
 # assets/*.db
 # assets/*.sqlite*
-assets/train
-assets/eval
-assets/eval_labels.txt
-assets/train_labels.txt
-assets/crohme_model.xml
+assets/*

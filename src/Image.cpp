@@ -50,6 +50,7 @@ vector<vector<Point>> Image::GetValidContours() const {
     }
   }
   //TODO sort contours left to right if needed
+  //std::sort(valid_contours.begin(), valid_contours.end(), )
   return valid_contours;
 }
 

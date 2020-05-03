@@ -35,7 +35,7 @@ TEST_CASE("Trained model has desirable accuracy") {
 }
 
 TEST_CASE("Classify image") {
-  KNN_Model model("../../../../../../assets/crohme_model.xml");
+  KNN_Model model("../../../../../../assets/knn_digits.xml");
   string result = model.ClassifyImage("../../../../../../tests/assets/5chars.jpg");
   REQUIRE(result == "13540");
 }
