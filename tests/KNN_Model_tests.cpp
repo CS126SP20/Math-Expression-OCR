@@ -28,9 +28,9 @@ TEST_CASE("Save trained model") {
 }
 
 TEST_CASE("Trained model has desirable accuracy") {
-  KNN_Model model("../../../../../../assets/crohme_model.xml");
-  vector<LabeledCharacter> eval_chars = GetLabeledCharacters("../../../../../../assets/eval/",
-      "../../../../../../assets/eval_labels.txt");
+  KNN_Model model("../../../../../../assets/knn_digits.xml");
+  vector<LabeledCharacter> eval_chars = GetLabeledCharacters("../../../../../../assets/test_nums/",
+      "../../../../../../assets/test_nums.txt");
   REQUIRE(model.EvaluateModel(eval_chars) > 75.00);
 }
 

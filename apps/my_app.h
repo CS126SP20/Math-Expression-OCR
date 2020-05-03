@@ -6,6 +6,7 @@
 #include <cinder/app/App.h>
 #include <cinder/gl/Texture.h>
 
+using cinder::gl::Texture2dRef;
 namespace myapp {
 
 class MyApp : public cinder::app::App {
@@ -17,6 +18,10 @@ class MyApp : public cinder::app::App {
   void update() override;
   void draw() override;
   void keyDown(cinder::app::KeyEvent) override;
+
+ private:
+  Texture2dRef texture;
+
 };
 
 }  // namespace myapp

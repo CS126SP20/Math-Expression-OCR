@@ -8,6 +8,7 @@
 #include <ocr/labels.h>
 #include <ocr/training_utils.h>
 
+#include <opencv2/highgui.hpp>
 #include <opencv2/imgproc.hpp>
 #include <opencv2/ml/ml.hpp>
 
@@ -47,9 +48,9 @@ string KNN_Model::ClassifyImage(const string& image_path) const {
   string all_labels;
   Image image(image_path);
   vector<Character> all_characters = image.GetCharacters();
-  for (Character character : all_characters) {
-    all_labels.append(ClassifySingleCharacter(character));
-  }
+    for (Character character : all_characters) {
+      all_labels.append(ClassifySingleCharacter(character));
+    }
   return all_labels;
 }
 
@@ -75,11 +76,12 @@ string KNN_Model::ClassifySingleCharacter(
     const Character& character_to_classify) const {
   Mat results(0, 0, CV_32F);
   Mat flattened_character_mat = character_to_classify.GetMatrix();
-  cv::resize(flattened_character_mat, flattened_character_mat, cv::Size(30,30));
+  cv::resize(flattened_character_mat, flattened_character_mat, cv::Size(20,30));
   flattened_character_mat = flattened_character_mat.reshape(1, 1);
   flattened_character_mat.convertTo(flattened_character_mat, CV_32F);
   kNearest_model_->findNearest(flattened_character_mat, kNumNearest, results);
   float numerical_label = (float)results.at<float>(0, 0);
+  numerical_label = round(numerical_label);
   string label = label_and_num_map_.right.at(numerical_label);
   return label;
 }

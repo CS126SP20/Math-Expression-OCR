@@ -25,6 +25,12 @@ void ProcessMatrix(Mat& matrix, bool is_character_matrix) {
                         cv::ADAPTIVE_THRESH_GAUSSIAN_C,
                         cv::THRESH_BINARY, kBlockSize,
                         kThresholdConstant);
+  //TODO fix magic nums
+  if (is_character_matrix) {
+    cv::resize(matrix, matrix,
+               cv::Size(20,30));
+
+  }
   Mat sobel_x, sobel_y, magnitude;
   cv::Sobel(matrix, sobel_x, CV_32F, 1,0);
   cv::Sobel(matrix, sobel_y, CV_32F, 0,1);
@@ -35,9 +41,15 @@ void ProcessMatrix(Mat& matrix, bool is_character_matrix) {
   Mat kernel = Mat::ones(kDialationKernelSize,kDialationKernelSize, CV_8U);
   cv::dilate(matrix,matrix,kernel);
 
-  if (is_character_matrix) {
-    cv::resize(matrix, matrix,
-               cv::Size(kResizeSideLength, kResizeSideLength));
-  }
+
+
 }
+
+bool SortContours(const vector<cv::Point>& first, const vector<cv::Point>& second) {
+  //TODO put in a better place
+  cv::Rect firstr = cv::boundingRect(first);
+  cv::Rect secondr = cv::boundingRect(second);
+  return firstr.x < secondr.x;
+}
+
 }

@@ -13,6 +13,7 @@ using std::__fs::filesystem::exists;
 using std::invalid_argument;
 using cv::Point;
 using ocr::ProcessMatrix;
+using ocr::SortContours;
 
 
 namespace ocr {
@@ -40,17 +41,18 @@ vector<vector<Point>> Image::GetValidContours() const {
   vector<vector<Point>> valid_contours;
   Mat image_mat_copy = image_mat_.clone();
   vector<vector<Point>> all_contours;
-  vector<cv::Vec4i> v4i_hierarchy;
   cv::findContours(image_mat_copy, all_contours, cv::RETR_EXTERNAL,
       cv::CHAIN_APPROX_SIMPLE);
   for (auto& contour : all_contours) {
-    double area = cv::contourArea(contour);
     if (cv::contourArea(contour) > kMinContourArea) {
       valid_contours.push_back(contour);
+
     }
   }
+  cv::drawContours(image_mat_,all_contours,-1, cv::Scalar(0,0,0));
+  cv::imshow("drew contours", image_mat_);
   //TODO sort contours left to right if needed
-  //std::sort(valid_contours.begin(), valid_contours.end(), )
+  std::sort(valid_contours.begin(), valid_contours.end(), SortContours);
   return valid_contours;
 }
 

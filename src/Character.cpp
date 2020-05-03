@@ -4,18 +4,22 @@
 
 #include "ocr/Character.h"
 
+#include <ocr/matrix_utils.h>
+
 #include <filesystem>
+#include <opencv2/highgui.hpp>
 #include <opencv2/imgcodecs.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
-#include <ocr/matrix_utils.h>
+#include <opencv2/photo.hpp>
 #include <string>
 #include <vector>
 
-using std::string;
+using ocr::kDialationKernelSize;
 using std::vector;
 using std::__fs::filesystem::exists;
 using std::invalid_argument;
 using ocr::kResizeSideLength;
+using ocr::kDialationKernelSize;
 
 namespace ocr {
 
@@ -30,6 +34,9 @@ Character::Character(const string& filepath) {
 
 Character::Character(const cv::Mat& mat) {
   character_mat_ = mat;
+  //TODO fix magic nums
+  cv::resize(character_mat_, character_mat_, cv::Size(20, 30));
+
 }
 
 cv::Mat Character::GetMatrix() const {
