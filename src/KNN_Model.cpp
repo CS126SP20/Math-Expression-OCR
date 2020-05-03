@@ -44,6 +44,10 @@ void KNN_Model::Save(const string& path) const {
   kNearest_model_->save(path);
 }
 
+void KNN_Model::Load(const string& path) {
+  kNearest_model_ = KNearest::load(path);
+}
+
 string KNN_Model::ClassifyImage(const string& image_path) const {
   string all_labels;
   Image image(image_path);

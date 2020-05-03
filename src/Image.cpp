@@ -49,8 +49,6 @@ vector<vector<Point>> Image::GetValidContours() const {
 
     }
   }
-  cv::drawContours(image_mat_,all_contours,-1, cv::Scalar(0,0,0));
-  cv::imshow("drew contours", image_mat_);
   //TODO sort contours left to right if needed
   std::sort(valid_contours.begin(), valid_contours.end(), SortContours);
   return valid_contours;
@@ -58,6 +56,7 @@ vector<vector<Point>> Image::GetValidContours() const {
 
 Mat Image::GetMatFromContour(const vector<Point>& contour) const {
   cv::Rect bounds = cv::boundingRect(contour);
+  //TODO remove magic nums
   cv::rectangle(image_mat_, bounds, cv::Scalar(100,0,0), 2);
   return image_mat_(bounds).clone();
 }

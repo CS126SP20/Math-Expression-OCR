@@ -23,6 +23,7 @@ class KNN_Model {
 
   void Train(const string& training_img_dir, const string& label_path);
   void Save(const string& path) const;
+  void Load(const string& path);
   string ClassifyImage(const string& image_path) const;
   double EvaluateModel(vector<LabeledCharacter> labeled_characters) const;
 

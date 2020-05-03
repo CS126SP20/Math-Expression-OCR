@@ -5,8 +5,11 @@
 
 #include <cinder/app/App.h>
 #include <cinder/gl/Texture.h>
+#include <ocr/KNN_Model.h>
+#include <ocr/Image.h>
 
 using cinder::gl::Texture2dRef;
+using ocr::KNN_Model;
 namespace myapp {
 
 class MyApp : public cinder::app::App {
@@ -20,7 +23,10 @@ class MyApp : public cinder::app::App {
   void keyDown(cinder::app::KeyEvent) override;
 
  private:
+  KNN_Model model;
+  Image img;
   Texture2dRef texture;
+
 
 };
 
