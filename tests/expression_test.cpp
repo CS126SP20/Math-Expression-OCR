@@ -7,3 +7,46 @@
 
 using expression_evaluator::Expression;
 
+TEST_CASE("Simple operation expressions") {
+
+  SECTION("Addition") {
+    Expression exp("3 + 5");
+    REQUIRE(exp.Evaluate() == 8);
+  }
+
+  SECTION("Subtraction") {
+    Expression exp("5 - 3");
+    REQUIRE(exp.Evaluate() == 2);
+  }
+
+  SECTION("Multiplication") {
+    Expression exp("5 * 3");
+    REQUIRE(exp.Evaluate() == 15);
+  }
+
+  SECTION("Division") {
+    Expression exp("5 / 3");
+    REQUIRE(exp.Evaluate() == Approx(5.0 / 3.0));
+  }
+
+}
+
+TEST_CASE("Solves expression according to order of equations") {
+  Expression exp("3 * 7 + 8");
+  REQUIRE(exp.Evaluate() == 29);
+}
+
+TEST_CASE("Solves equation with grouping symbols") {
+
+  SECTION("Parentheses") {
+    Expression exp("5 * (3+4)");
+    REQUIRE(exp.Evaluate() == 35);
+  }
+
+  SECTION("Brackets") {
+    Expression exp("5 * [3 + 4]");
+    REQUIRE(exp.Evaluate() == 35);
+  }
+
+}
+
