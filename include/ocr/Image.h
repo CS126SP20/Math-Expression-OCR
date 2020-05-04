@@ -11,8 +11,6 @@
 
 using std::vector;
 using ocr::Character;
-using cv::Point;
-using cv::Rect;
 using cv::Mat;
 
 
@@ -21,8 +19,8 @@ namespace ocr {
 const size_t kMinContourArea = 150;
 
 struct Contour {
-  vector<Point> contour_points;
-  Rect bounding_rect;
+  vector<cv::Point> contour_points;
+  cv::Rect bounding_rect;
 };
 
 
@@ -34,8 +32,8 @@ class Image {
 
  private:
   Mat image_mat_;
-  vector<vector<Point>> GetValidContours() const;
-  Mat GetMatFromContour(const vector<Point>& contour) const;
+  vector<vector<cv::Point>> GetValidContours() const;
+  Mat GetMatFromContour(const vector<cv::Point>& contour) const;
 
 
 };

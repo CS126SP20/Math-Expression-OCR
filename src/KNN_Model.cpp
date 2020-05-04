@@ -6,6 +6,7 @@
 
 #include <ocr/Image.h>
 #include <ocr/labels.h>
+#include <ocr/matrix_utils.h>
 #include <ocr/training_utils.h>
 
 #include <opencv2/highgui.hpp>
@@ -16,14 +17,17 @@ using cv::Ptr;
 using cv::Ptr;
 using ocr::GetNumericalLabelsMat;
 using ocr::GetFlattenedImagesMat;
+using cv::ml::KNearest;
 using ocr::Image;
 
 namespace ocr {
 
-KNN_Model::KNN_Model() { kNearest_model_ = KNearest::create(); }
+KNN_Model::KNN_Model() {
+  model_ = KNearest::create();
+}
 
 KNN_Model::KNN_Model(const string& saved_model) {
-  kNearest_model_ = KNearest::load(saved_model);
+  model_ = KNearest::load(saved_model);
 }
 
 void KNN_Model::Train(const string& training_img_dir,
@@ -32,20 +36,20 @@ void KNN_Model::Train(const string& training_img_dir,
       GetLabeledCharacters(training_img_dir, label_path);
   Mat flattened_imgs = GetFlattenedImagesMat(training_characters);
   Mat labels = GetNumericalLabelsMat(training_characters);
+  std::cout << labels << std::endl;
   std::cout << "Training model..." << std::endl;
-  kNearest_model_->train(flattened_imgs, cv::ml::ROW_SAMPLE, labels);
+  model_->train(flattened_imgs, cv::ml::SampleTypes::ROW_SAMPLE, labels);
   std::cout << "Training complete!" << std::endl;
 }
 
 void KNN_Model::Save(const string& path) const {
-  if (!kNearest_model_->isTrained()) {
+  if (!model_->isTrained()) {
     throw "Model is not trained, could not save.";
   }
-  kNearest_model_->save(path);
+  model_->save(path);
 }
 
-void KNN_Model::Load(const string& path) {
-  kNearest_model_ = KNearest::load(path);
+void KNN_Model::Load(const string& path) { model_ = KNearest::load(path);
 }
 
 string KNN_Model::ClassifyImage(const string& image_path) const {
@@ -59,7 +63,7 @@ string KNN_Model::ClassifyImage(const string& image_path) const {
 }
 
 bool KNN_Model::IsTrained() const {
-  return kNearest_model_->isTrained();
+  return model_->isTrained();
 }
 
 double KNN_Model::EvaluateModel(vector<LabeledCharacter> labeled_chars) const {
@@ -81,9 +85,12 @@ string KNN_Model::ClassifySingleCharacter(
   Mat results(0, 0, CV_32F);
   Mat flattened_character_mat = character_to_classify.GetMatrix();
   cv::resize(flattened_character_mat, flattened_character_mat, cv::Size(20,30));
+  //vector<float> char_hog = GetHOGDescriptors(flattened_character_mat);
   flattened_character_mat = flattened_character_mat.reshape(1, 1);
   flattened_character_mat.convertTo(flattened_character_mat, CV_32F);
-  kNearest_model_->findNearest(flattened_character_mat, kNumNearest, results);
+  //TODO check hog
+  model_->findNearest(flattened_character_mat, kNumNearest, results);
+  //model_->predict(char_hog, results);
   float numerical_label = (float)results.at<float>(0, 0);
   numerical_label = round(numerical_label);
   string label = label_and_num_map_.right.at(numerical_label);

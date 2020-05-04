@@ -3,16 +3,19 @@
 //
 
 #include "ocr/training_utils.h"
-#include <filesystem>
-#include <ocr/Character.h>
-#include <fstream>
-#include <istream>
-#include <vector>
-#include <iostream>
-#include <ocr/labels.h>
-#include<opencv2/core/core.hpp>
 
-using std::vector;
+#include <ocr/Character.h>
+#include <ocr/labels.h>
+#include <ocr/matrix_utils.h>
+
+#include <filesystem>
+#include <fstream>
+#include <iostream>
+#include <istream>
+#include <opencv2/core/core.hpp>
+#include <vector>
+
+using cv::Mat;
 using std::__fs::filesystem::exists;
 using std::__fs::filesystem::directory_iterator;
 using std::ifstream;
@@ -55,16 +58,24 @@ vector<LabeledCharacter> GetLabeledCharacters(const string &characters_dir,
 
   }
   //TODO fix ?
-  Mat numerical_labels_mat(1, labels.size(), CV_32F, labels.data());
+  Mat numerical_labels_mat(labels);
+  numerical_labels_mat.convertTo(numerical_labels_mat, CV_32F);
   return numerical_labels_mat;
 }
 
 Mat GetFlattenedImagesMat(const vector<LabeledCharacter>& training_chars) {
   Mat flattened_imgs;
+  Mat flat2;
+  Mat flat3;
   for (LabeledCharacter character : training_chars) {
     Mat single_img;
     character.character.GetMatrix().convertTo(single_img, CV_32F);
-    single_img = single_img.reshape(1,1);
+//    vector<float> desc = GetHOGDescriptors(single_img);
+//    //TODO changed to HOG, rename and clean up
+//    Mat to_add(desc);
+//    to_add =  to_add.reshape(1,1);
+  single_img = single_img.reshape(1,1);
+
     flattened_imgs.push_back(single_img);
   }
   return flattened_imgs;

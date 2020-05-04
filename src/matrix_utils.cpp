@@ -6,13 +6,17 @@
 
 #include <opencv2/core.hpp>
 #include <opencv2/highgui.hpp>
-#include <opencv2/photo.hpp>
+#include <opencv2/imgproc.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
+#include <opencv2/objdetect.hpp>
+#include <opencv2/photo.hpp>
 #include <vector>
 
-using cv::Mat;
+using cv::HOGDescriptor;
 using cv::Point;
+using cv::Size;
 using std::vector;
+using cv::HOGDescriptor;
 
 namespace ocr {
 
@@ -51,5 +55,18 @@ bool SortContours(const vector<cv::Point>& first, const vector<cv::Point>& secon
   cv::Rect secondr = cv::boundingRect(second);
   return firstr.x < secondr.x;
 }
+
+vector<float> GetHOGDescriptors(Mat& mat) {
+  vector<float> descriptors;
+  mat.convertTo(mat, CV_8UC1);
+  HOGDescriptor hogDescriptor(Size(20,20), Size(10,10),
+      Size(5,5), Size(10,10), 9);
+
+  hogDescriptor.compute(mat, descriptors);
+  return descriptors;
+}
+
+
+
 
 }

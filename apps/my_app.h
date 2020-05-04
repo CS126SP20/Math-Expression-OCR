@@ -11,6 +11,11 @@
 using cinder::gl::Texture2dRef;
 using ocr::KNN_Model;
 namespace myapp {
+const char kNormalFont[] = "Arial Unicode MS";
+const string kModelPath = "../../../../../../assets/knn_all.xml";
+const size_t kFontSize = 50;
+const size_t kCenterX = 400;
+const size_t kCenterY = 400;
 
 class MyApp : public cinder::app::App {
  public:
@@ -24,10 +29,11 @@ class MyApp : public cinder::app::App {
 
  private:
   KNN_Model model;
-  Image img;
   Texture2dRef texture;
 
-
+  void PrintDetectedCharacters(const string& result);
+  void PrintText(const string& text, const cinder::Color& color, const cinder::ivec2& size,
+            const cinder::vec2& loc);
 };
 
 }  // namespace myapp

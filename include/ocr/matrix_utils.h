@@ -25,6 +25,7 @@ const double kNormBeta = 255;
 
 void ProcessMatrix(Mat& matrix, bool is_character_mat);
 bool SortContours(const vector<cv::Point>& first, const vector<cv::Point>& second);
+vector<float> GetHOGDescriptors(Mat& matrix);
 
 }
 

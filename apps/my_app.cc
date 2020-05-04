@@ -14,6 +14,8 @@ using cinder::Surface;
 using cinder::Area;
 using cinder::gl::Texture;
 using cinder::TextBox;
+using cinder::Color;
+using cinder::ColorA;
 
 
 namespace myapp {
@@ -21,12 +23,11 @@ using cinder::gl::Texture2d;
 using cinder::app::KeyEvent;
 
 MyApp::MyApp() {
-  model = KNN_Model m("")
+  model.Load(kModelPath);
 }
 
 void MyApp::setup() {
   auto img = cinder::loadImage("../../../../../../tests/assets/5chars.jpg");
-
   texture = Texture2d::create(img);
 
 
@@ -37,25 +38,32 @@ void MyApp::update() {
 
 void MyApp::draw(){
   cinder::gl::draw(texture);
-  string result = model.ClassifyImage("../../../../../../tests/assets/5chars.jpg");
-  const cinder::vec2 center = getWindowCenter();
-  const cinder::ivec2 size = {500, 50};
-  PrintText(result, Color::red(), size, center);
+
+  string result = "Detected text: " +
+      model.ClassifyImage("../../../../../../tests/assets/5chars.jpg");
+  PrintDetectedCharacters(result);
+
+
+
 
 }
 
 void MyApp::keyDown(KeyEvent event) { }
 
+void MyApp::PrintDetectedCharacters(const string& result) {
+  const cinder::vec2 position  = {kCenterX, texture->getSize().y + 20 };
+  const cinder::ivec2 size = {500, 60};
+  const Color color = Color::white();
+  PrintText(result, color, size, position);
 }
 
-template <typename C>
-void PrintText(const string& text, const C& color, const cinder::ivec2& size,
+void MyApp::PrintText(const string& text, const Color& color, const cinder::ivec2& size,
                const cinder::vec2& loc) {
   cinder::gl::color(color);
 
   auto box = TextBox()
       .alignment(TextBox::CENTER)
-      .font(cinder::Font(kNormalFont, 30))
+      .font(cinder::Font(myapp::kNormalFont, myapp::kFontSize))
       .size(size)
       .color(color)
       .backgroundColor(ColorA(0, 0, 0, 0))
@@ -67,18 +75,4 @@ void PrintText(const string& text, const C& color, const cinder::ivec2& size,
   const auto texture = cinder::gl::Texture::create(surface);
   cinder::gl::draw(texture, locp);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// namespace myapp
+} // namespace myapp

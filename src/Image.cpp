@@ -33,6 +33,7 @@ vector<Character> Image::GetCharacters() {
     Mat character_mat = GetMatFromContour(contour);
     characters_in_img.push_back(Character(character_mat));
   }
+
   return characters_in_img;
 }
 

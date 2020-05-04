@@ -30,7 +30,7 @@ class KNN_Model {
   bool IsTrained() const;
 
  private:
-  cv::Ptr<KNearest> kNearest_model_;
+  cv::Ptr<KNearest> model_;
   string ClassifySingleCharacter(const Character& character_to_classify) const;
 
 
