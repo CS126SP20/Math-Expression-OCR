@@ -85,12 +85,9 @@ string KNN_Model::ClassifySingleCharacter(
   Mat results(0, 0, CV_32F);
   Mat flattened_character_mat = character_to_classify.GetMatrix();
   cv::resize(flattened_character_mat, flattened_character_mat, cv::Size(20,30));
-  //vector<float> char_hog = GetHOGDescriptors(flattened_character_mat);
   flattened_character_mat = flattened_character_mat.reshape(1, 1);
   flattened_character_mat.convertTo(flattened_character_mat, CV_32F);
-  //TODO check hog
   model_->findNearest(flattened_character_mat, kNumNearest, results);
-  //model_->predict(char_hog, results);
   float numerical_label = (float)results.at<float>(0, 0);
   numerical_label = round(numerical_label);
   string label = label_and_num_map_.right.at(numerical_label);

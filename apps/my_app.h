@@ -32,6 +32,7 @@ class MyApp : public cinder::app::App {
   Texture2dRef texture;
 
   void PrintDetectedCharacters(const string& result);
+  void PrintEvaluatedExpression(const string& exp);
   void PrintText(const string& text, const cinder::Color& color, const cinder::ivec2& size,
             const cinder::vec2& loc);
 };

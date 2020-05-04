@@ -20,6 +20,7 @@ using std::__fs::filesystem::exists;
 using std::__fs::filesystem::directory_iterator;
 using std::ifstream;
 using std::invalid_argument;
+using std::to_string;
 using ocr::LabeledCharacter;
 using cv::Mat;
 using cv::Mat1f;
@@ -35,18 +36,19 @@ vector<LabeledCharacter> GetLabeledCharacters(const string &characters_dir,
   }
   string label_line;
   vector<LabeledCharacter> created_characters;
-
-  for (const auto& file : directory_iterator(characters_dir)) {
-    Character training_char(file.path());
-    if (label_file.eof()) {
-      throw invalid_argument("Your label file does not have enough labels."
-                             " Please try again.");
+  size_t file_num = 0;
+  while(getline(label_file, label_line)) {
+    string character_path = characters_dir + to_string(file_num) + training_image_type;
+    if (!exists(character_path)) {
+      throw invalid_argument("Please make sure you have enough characters in your directory ");
     }
-    getline(label_file, label_line);
+    Character training_char(character_path);
     LabeledCharacter training_character {training_char, label_line};
     created_characters.push_back(training_character);
+    file_num++;
   }
   return created_characters;
+
 }
 
  Mat GetNumericalLabelsMat(const vector<LabeledCharacter>& training_chars) {
@@ -70,10 +72,7 @@ Mat GetFlattenedImagesMat(const vector<LabeledCharacter>& training_chars) {
   for (LabeledCharacter character : training_chars) {
     Mat single_img;
     character.character.GetMatrix().convertTo(single_img, CV_32F);
-//    vector<float> desc = GetHOGDescriptors(single_img);
-//    //TODO changed to HOG, rename and clean up
-//    Mat to_add(desc);
-//    to_add =  to_add.reshape(1,1);
+
   single_img = single_img.reshape(1,1);
 
     flattened_imgs.push_back(single_img);

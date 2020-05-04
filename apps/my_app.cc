@@ -5,11 +5,13 @@
 #include <cinder/gl/gl.h>
 #include <opencv2/highgui/highgui.hpp>
 #include <ocr/KNN_Model.h>
+#include <expression_evaluation/Expression.h>
 #include <ocr/Image.h>
 #include <filesystem>
 
 using ocr::KNN_Model;
 using ocr::Image;
+using expression_evaluator::Expression;
 using cinder::Surface;
 using cinder::Area;
 using cinder::gl::Texture;
@@ -27,7 +29,7 @@ MyApp::MyApp() {
 }
 
 void MyApp::setup() {
-  auto img = cinder::loadImage("../../../../../../tests/assets/5chars.jpg");
+  auto img = cinder::loadImage("../../../../../../tests/assets/addition2.jpg");
   texture = Texture2d::create(img);
 
 
@@ -38,10 +40,11 @@ void MyApp::update() {
 
 void MyApp::draw(){
   cinder::gl::draw(texture);
-
-  string result = "Detected text: " +
-      model.ClassifyImage("../../../../../../tests/assets/5chars.jpg");
-  PrintDetectedCharacters(result);
+  string result = model.ClassifyImage("../../../../../../tests/assets/addition2.jpg");
+  PrintDetectedCharacters("Detected: " + result);
+  Expression exp(result);
+  string evaluation = exp.Evaluate();
+  PrintEvaluatedExpression("Evaluation: " + evaluation);
 
 
 
@@ -55,6 +58,13 @@ void MyApp::PrintDetectedCharacters(const string& result) {
   const cinder::ivec2 size = {500, 60};
   const Color color = Color::white();
   PrintText(result, color, size, position);
+}
+
+void MyApp::PrintEvaluatedExpression(const string& exp) {
+  const cinder::vec2 position  = {kCenterX, texture->getSize().y + 70 };
+  const cinder::ivec2 size = {700, 60};
+  const Color color = Color::white();
+  PrintText(exp, color, size, position);
 }
 
 void MyApp::PrintText(const string& text, const Color& color, const cinder::ivec2& size,

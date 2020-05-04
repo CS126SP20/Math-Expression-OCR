@@ -15,7 +15,7 @@ namespace expression_evaluator {
 class Expression {
  public:
   Expression(const string& exp_string);
-  double Evaluate();
+  string Evaluate();
 
  private:
   string expression_str;

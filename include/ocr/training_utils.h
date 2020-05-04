@@ -13,6 +13,8 @@ using std::vector;
 using cv::Mat;
 
 namespace ocr {
+
+const string training_image_type = ".jpg";
 vector<LabeledCharacter> GetLabeledCharacters(const string& characters_dir,
     const string& label_file);
 
