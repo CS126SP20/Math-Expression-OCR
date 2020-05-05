@@ -22,8 +22,9 @@ Image::Image(const string& path) {
   if (!exists(path)) {
     throw invalid_argument("Could not find image at path: " + path);
   }
-  image_mat_ = cv::imread(path);
-  ProcessMatrix(image_mat_, false);
+  original_mat_= cv::imread(path);
+  processed_mat_ = original_mat_.clone();
+  ProcessMatrix(processed_mat_, false);
 }
 
 vector<Character> Image::GetCharacters() {
@@ -33,6 +34,8 @@ vector<Character> Image::GetCharacters() {
     Mat character_mat = GetMatFromContour(contour);
     characters_in_img.push_back(Character(character_mat));
   }
+  cv::imshow("detected", processed_mat_);
+  cv::waitKey(0);
 
   return characters_in_img;
 }
@@ -40,7 +43,7 @@ vector<Character> Image::GetCharacters() {
 
 vector<vector<Point>> Image::GetValidContours() const {
   vector<vector<Point>> valid_contours;
-  Mat image_mat_copy = image_mat_.clone();
+  Mat image_mat_copy = processed_mat_.clone();
   vector<vector<Point>> all_contours;
   cv::findContours(image_mat_copy, all_contours, cv::RETR_EXTERNAL,
       cv::CHAIN_APPROX_SIMPLE);
@@ -58,8 +61,10 @@ vector<vector<Point>> Image::GetValidContours() const {
 Mat Image::GetMatFromContour(const vector<Point>& contour) const {
   cv::Rect bounds = cv::boundingRect(contour);
   //TODO remove magic nums
-  cv::rectangle(image_mat_, bounds, cv::Scalar(100,0,0), 2);
-  return image_mat_(bounds).clone();
+  cv::rectangle(processed_mat_, bounds, cv::Scalar(100,0,0), 2);
+  Mat region_of_interest = original_mat_(bounds).clone();
+  cv::cvtColor(region_of_interest, region_of_interest, cv::COLOR_BGR2GRAY);
+  return region_of_interest;
 }
 
 

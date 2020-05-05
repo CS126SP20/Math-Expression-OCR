@@ -31,7 +31,8 @@ class Image {
 
 
  private:
-  Mat image_mat_;
+  Mat original_mat_;
+  Mat processed_mat_;
   vector<vector<cv::Point>> GetValidContours() const;
   Mat GetMatFromContour(const vector<cv::Point>& contour) const;
 

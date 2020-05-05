@@ -28,7 +28,7 @@ TEST_CASE("Save trained model") {
 }
 
 TEST_CASE("Trained model has desirable accuracy") {
-  KNN_Model model("../../../../../../assets/knn.xml");
+  KNN_Model model("../../../../../../assets/knn_resize.xml");
   vector<LabeledCharacter> eval_chars = GetLabeledCharacters("../../../../../../assets/test/",
       "../../../../../../assets/test_labels.txt");
   REQUIRE(model.EvaluateModel(eval_chars) > 75.00);
@@ -36,14 +36,14 @@ TEST_CASE("Trained model has desirable accuracy") {
 
 TEST_CASE("Classify image") {
   KNN_Model model("../../../../../../assets/knn.xml");
-  string result = model.ClassifyImage("../../../../../../tests/assets/5chars.png");
+  string result = model.ClassifyImage("../../../../../../tests/assets/5chars.jpg");
   REQUIRE(result == "13540");
 }
 
 TEST_CASE("Train and classify") {
   KNN_Model model;
   model.Train( "../../../../../../assets/training/",  "../../../../../../assets/train_labels.txt");
-  model.Save( "../../../../../../assets/knn.xml");
+  model.Save( "../../../../../../assets/knn_resize.xml");
   string result = model.ClassifyImage("../../../../../../tests/assets/5chars.jpg");
   REQUIRE(result == "13540");
 }

@@ -33,7 +33,7 @@ void ProcessMatrix(Mat& matrix, bool is_character_matrix) {
   if (is_character_matrix) {
     cv::resize(matrix, matrix,
                cv::Size(20,30));
-
+    return;
   }
   Mat sobel_x, sobel_y, magnitude;
   cv::Sobel(matrix, sobel_x, CV_32F, 1,0);
@@ -55,18 +55,4 @@ bool SortContours(const vector<cv::Point>& first, const vector<cv::Point>& secon
   cv::Rect secondr = cv::boundingRect(second);
   return firstr.x < secondr.x;
 }
-
-vector<float> GetHOGDescriptors(Mat& mat) {
-  vector<float> descriptors;
-  mat.convertTo(mat, CV_8UC1);
-  HOGDescriptor hogDescriptor(Size(20,20), Size(10,10),
-      Size(5,5), Size(10,10), 9);
-
-  hogDescriptor.compute(mat, descriptors);
-  return descriptors;
-}
-
-
-
-
 }

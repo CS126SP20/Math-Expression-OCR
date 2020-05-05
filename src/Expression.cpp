@@ -16,7 +16,7 @@ string Expression::Evaluate() {
   parser exp_parser;
   expression exp_to_evaluate;
   if (!exp_parser.compile(expression_str, exp_to_evaluate)) {
-    throw "Could not evaluate expression";
+    return "Could not evaluate expression";
   }
   return  to_string(exp_to_evaluate.value());
 }

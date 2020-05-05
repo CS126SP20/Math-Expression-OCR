@@ -68,11 +68,18 @@ bool KNN_Model::IsTrained() const {
 
 double KNN_Model::EvaluateModel(vector<LabeledCharacter> labeled_chars) const {
   double num_correct = 0;
+  int total = 0;
   for (LabeledCharacter labeled_character : labeled_chars) {
     string predicted_label = ClassifySingleCharacter(labeled_character.character);
     if (predicted_label == labeled_character.label) {
+
+        cv::imshow(predicted_label, labeled_character.character.GetMatrix());
+        cv::waitKey(0);
+        cv::destroyWindow(predicted_label);
+        std::cout << total << std::endl;
       num_correct++;
     }
+    total++;
   }
 
   std::cout << "size " << labeled_chars.size() << std::endl;

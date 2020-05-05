@@ -29,7 +29,7 @@ MyApp::MyApp() {
 }
 
 void MyApp::setup() {
-  auto img = cinder::loadImage("../../../../../../tests/assets/addition2.jpg");
+  auto img = cinder::loadImage(path);
   texture = Texture2d::create(img);
 
 
@@ -39,8 +39,9 @@ void MyApp::update() {
 }
 
 void MyApp::draw(){
-  cinder::gl::draw(texture);
-  string result = model.ClassifyImage("../../../../../../tests/assets/addition2.jpg");
+  cinder::gl::draw(texture, {200, 0});
+
+  string result = model.ClassifyImage(path);
   PrintDetectedCharacters("Detected: " + result);
   Expression exp(result);
   string evaluation = exp.Evaluate();

@@ -12,7 +12,7 @@ using cinder::gl::Texture2dRef;
 using ocr::KNN_Model;
 namespace myapp {
 const char kNormalFont[] = "Arial Unicode MS";
-const string kModelPath = "../../../../../../assets/knn_all.xml";
+const string kModelPath = "../../../../../../assets/knn_resize.xml";
 const size_t kFontSize = 50;
 const size_t kCenterX = 400;
 const size_t kCenterY = 400;
@@ -28,6 +28,7 @@ class MyApp : public cinder::app::App {
   void keyDown(cinder::app::KeyEvent) override;
 
  private:
+  string path = "../../../../../../tests/assets/5chars.jpg";
   KNN_Model model;
   Texture2dRef texture;
 

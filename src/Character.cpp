@@ -35,7 +35,32 @@ Character::Character(const string& filepath) {
 Character::Character(const cv::Mat& mat) {
   character_mat_ = mat;
   //TODO fix magic nums
+  cv::imshow("char", character_mat_);
+  cv::waitKey(0);
+  int top = 0;
+  int bottom = 0;
+  int left = 0;
+  int right = 0;
+  int border = cv::BORDER_CONSTANT;
+  if (character_mat_.rows > character_mat_.cols) {
+    left = (int) (0.5 * (character_mat_.rows - character_mat_.cols)); right = left;
+  }
+  if (character_mat_.cols > character_mat_.rows) {
+    top = (int) (0.5 * (character_mat_.cols - character_mat_.rows)); bottom = top;
+  }
+
+
+
+  cv::Scalar value(255,255,255);
+  cv::copyMakeBorder(character_mat_, character_mat_, top, bottom, left, right, border,value);
+  Mat kernel = Mat::ones(kDialationKernelSize,kDialationKernelSize, CV_8U);
+  cv::erode(character_mat_,character_mat_,kernel);
+
+  cv::imshow("char", character_mat_);
+  cv::waitKey(0);
   cv::resize(character_mat_, character_mat_, cv::Size(20, 30));
+  cv::imshow("char", character_mat_);
+  cv::waitKey(0);
 
 }
 
