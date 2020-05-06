@@ -19,21 +19,15 @@ const string training_image_type = ".jpg";
 class TrainingData {
  public:
   TrainingData(const string& characters_dir, const string& label_file);
-  vector<LabeledCharacter> GetLabeledCharacters(const string& characters_dir,
-                                                const string& label_file);
-  Mat GetNumericalLabelsMat(const vector<LabeledCharacter>& training_chars);
-  Mat GetFlattenedImagesMat(const vector<LabeledCharacter>& training_chars);
+  Mat GetNumericalLabelsMat();
+  Mat GetFlattenedCharsMat();
  private:
   vector<LabeledCharacter> labeled_chars_;
+  vector<LabeledCharacter> GetLabeledCharacters(const string& characters_dir,
+                                               const string& label_file);
 
 
 };
-
-vector<LabeledCharacter> GetLabeledCharacters(const string& characters_dir,
-    const string& label_file);
-
-Mat GetNumericalLabelsMat(const vector<LabeledCharacter>& training_chars);
-Mat GetFlattenedImagesMat(const vector<LabeledCharacter>& training_chars);
 
 }
 

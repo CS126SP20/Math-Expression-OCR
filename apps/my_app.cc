@@ -4,6 +4,7 @@
 #include <gflags/gflags.h>
 #include <cinder/app/App.h>
 #include <cinder/gl/gl.h>
+#include <cinder/ip/Resize.h>
 #include <opencv2/highgui/highgui.hpp>
 #include <ocr/KNN_Model.h>
 #include <ocr/Image.h>
@@ -19,6 +20,7 @@ using cinder::gl::Texture;
 using cinder::TextBox;
 using cinder::Color;
 using cinder::ColorA;
+using cinder::ip::resize;
 
 
 namespace myapp {
@@ -40,49 +42,54 @@ MyApp::MyApp() {
 
 void MyApp::setup() {
   if (!FLAGS_train) {
-    auto img = cinder::loadImage(FLAGS_equation);
+    Surface img = cinder::loadImage(FLAGS_equation);
+    img = cinder::ip::resizeCopy(img,
+        Area(0,0,img.getWidth(),img.getHeight()),  kImageSize);
     model.Load(FLAGS_model);
     texture = Texture2d::create(img);
   } else {
-    should_start_training = false;
-    model_is_saved = false;
+    current_state_ = TrainingState::NotStarted;
+    displayed_status = false;
   }
 }
 
 void MyApp::update() {
   if (FLAGS_train) {
-    if (should_start_training) {
-      model.Train(FLAGS_training_images, FLAGS_training_labels);
-      should_start_training = false;
-      model_is_training = true;
+    if (!displayed_status) {
+      return;
     }
-    if (model.IsTrained() && !model_is_saved) {
+    if (current_state_ == TrainingState::NotStarted) {
+      current_state_ = TrainingState::Training;
+      model.Train(FLAGS_training_images, FLAGS_training_labels);
+    }
+    if (model.IsTrained() && current_state_ == TrainingState::Training) {
+      current_state_ = TrainingState::Trained;
       model.Save(FLAGS_model_save_path);
-      model_is_training = false;
-      model_is_saved = true;
     }
   }
 }
 
 void MyApp::draw(){
   if (!FLAGS_train) {
-    cinder::gl::draw(texture, kImagePosition);
+    cinder::gl::draw(texture, {getWindowCenter().x - kImageOffset, 0});
     string result = model.ClassifyImage(FLAGS_equation);
     PrintDetectedCharacters("Detected: " + result);
     Expression exp(result);
     string evaluation = exp.Evaluate();
     PrintEvaluatedExpression("Evaluation: " + evaluation);
   } else {
-    if (!should_start_training && !model.IsTrained()) {
+    if (!displayed_status || current_state_ == TrainingState::Training) {
       PrintText(
           "Training... ",
           Color::white(), kTrainingStatusSize, getWindowCenter());
-      should_start_training = true;
+      displayed_status = true;
     }
-    if (model_is_saved){
+    if (current_state_ == TrainingState::Trained){
+      cinder::gl::clear(ColorA::black());
       PrintText(
-          "Training Complete! ",
-          Color::white(), kTrainingStatusSize, getWindowCenter());
+          "Training Complete!"
+          "\nRerun with your model to evaluate an expression",
+          Color::white(), kTrainingCompleteSize, getWindowCenter());
     }
   }
 }
@@ -101,10 +108,6 @@ void MyApp::PrintEvaluatedExpression(const string& exp) {
   PrintText(exp, Color::white(), kEvaluatedExpressionSize, position);
 }
 
-void ShowTrainingStatus() {
-
-}
-
 void MyApp::PrintText(const string& text, const Color& color, const cinder::ivec2& size,
                const cinder::vec2& loc) {
   cinder::gl::color(color);
@@ -114,7 +117,7 @@ void MyApp::PrintText(const string& text, const Color& color, const cinder::ivec
       .font(cinder::Font(myapp::kNormalFont, myapp::kFontSize))
       .size(size)
       .color(color)
-      .backgroundColor(ColorA(0, 0, 0, 0))
+      .backgroundColor(ColorA::black())
       .text(text);
 
   const auto box_size = box.getSize();

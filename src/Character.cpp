@@ -34,6 +34,7 @@ Character::Character(const string& filepath) {
 Character::Character(const cv::Mat& mat) {
   character_mat_ = mat;
 
+  PadCharacter();
   Mat kernel = Mat::ones(kKernelSize, kKernelSize, CV_8U);
   cv::erode(character_mat_,character_mat_,kernel);
   cv::resize(character_mat_, character_mat_,
@@ -41,12 +42,17 @@ Character::Character(const cv::Mat& mat) {
 
 }
 
-cv::Mat Character::GetMatrix() const {
-  return character_mat_;
+cv::Mat Character::GetFlattenedMatrix() const {
+  Mat flattened = character_mat_.reshape(1,1);
+  flattened.convertTo(flattened, CV_32F);
+  return flattened;
 }
 
 void Character::PadCharacter(){
-  int top, bottom, right, left = 0;
+  int top = 0;
+  int bottom = 0;
+  int right = 0;
+  int left = 0;
   int border = cv::BORDER_CONSTANT;
   if (character_mat_.rows > character_mat_.cols) {
     left = (int) (kPadRatio * (character_mat_.rows - character_mat_.cols));
@@ -60,7 +66,4 @@ void Character::PadCharacter(){
       left, right, border, kPadValue);
 
 }
-
-
-
 }

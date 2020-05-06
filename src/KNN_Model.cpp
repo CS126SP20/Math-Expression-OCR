@@ -8,15 +8,11 @@
 #include <ocr/TrainingData.h>
 #include <ocr/labels.h>
 #include <ocr/matrix_utils.h>
-
-#include <opencv2/highgui.hpp>
-#include <opencv2/imgproc.hpp>
 #include <opencv2/ml/ml.hpp>
 
 using cv::Ptr;
 using cv::Ptr;
-using ocr::GetNumericalLabelsMat;
-using ocr::GetFlattenedImagesMat;
+using ocr::TrainingData;
 using cv::ml::KNearest;
 using ocr::Image;
 
@@ -27,19 +23,15 @@ KNN_Model::KNN_Model() {
 }
 
 KNN_Model::KNN_Model(const string& saved_model) {
-  model_ = KNearest::load(saved_model);
+  Load(saved_model);
 }
 
 void KNN_Model::Train(const string& training_img_dir,
                       const string& label_path) {
-  vector<LabeledCharacter> training_characters =
-      GetLabeledCharacters(training_img_dir, label_path);
-  Mat flattened_imgs = GetFlattenedImagesMat(training_characters);
-  Mat labels = GetNumericalLabelsMat(training_characters);
-  std::cout << labels << std::endl;
-  std::cout << "Training model..." << std::endl;
+  TrainingData train_data(training_img_dir, label_path);
+  Mat flattened_imgs = train_data.GetFlattenedCharsMat();
+  Mat labels = train_data.GetNumericalLabelsMat();
   model_->train(flattened_imgs, cv::ml::SampleTypes::ROW_SAMPLE, labels);
-  std::cout << "Training complete!" << std::endl;
 }
 
 void KNN_Model::Save(const string& path) const {
@@ -49,7 +41,8 @@ void KNN_Model::Save(const string& path) const {
   model_->save(path);
 }
 
-void KNN_Model::Load(const string& path) { model_ = KNearest::load(path);
+void KNN_Model::Load(const string& path) {
+  model_ = KNearest::load(path);
 }
 
 string KNN_Model::ClassifyImage(const string& image_path) const {
@@ -74,7 +67,6 @@ double KNN_Model::EvaluateModel(vector<LabeledCharacter> labeled_chars) const {
       num_correct++;
     }
   }
-
   std::cout << "Total Samples: " << labeled_chars.size() << std::endl;
   std::cout << "Number Correct: " << num_correct << std::endl;
   return (num_correct / labeled_chars.size()) * 100;
@@ -83,13 +75,10 @@ double KNN_Model::EvaluateModel(vector<LabeledCharacter> labeled_chars) const {
 string KNN_Model::ClassifySingleCharacter(
     const Character& character_to_classify) const {
   Mat results(0, 0, CV_32F);
-  Mat flattened_character_mat = character_to_classify.GetMatrix();
-  cv::resize(flattened_character_mat, flattened_character_mat, cv::Size(kCharacterWidth,kCharacterHeight));
-  flattened_character_mat = flattened_character_mat.reshape(1, 1);
-  flattened_character_mat.convertTo(flattened_character_mat, CV_32F);
+  Mat flattened_character_mat = character_to_classify.GetFlattenedMatrix();
+
   model_->findNearest(flattened_character_mat, kNumNearest, results);
-  float numerical_label = (float)results.at<float>(0, 0);
-  numerical_label = round(numerical_label);
+  float numerical_label = results.at<float>(0, 0);
   string label = label_and_num_map_.right.at(numerical_label);
   return label;
 }

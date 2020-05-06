@@ -56,9 +56,9 @@ vector<LabeledCharacter> TrainingData::GetLabeledCharacters(const string &charac
 
 }
 
- Mat TrainingData::GetNumericalLabelsMat(const vector<LabeledCharacter>& training_chars) {
+ Mat TrainingData::GetNumericalLabelsMat() {
   vector<float> labels;
-  for (LabeledCharacter character : training_chars) {
+  for (LabeledCharacter character : labeled_chars_) {
 
       float numerical_label = ocr::label_and_num_map_.left.at(character.label);
       labels.push_back(numerical_label);
@@ -69,19 +69,15 @@ vector<LabeledCharacter> TrainingData::GetLabeledCharacters(const string &charac
   return numerical_labels_mat;
 }
 
-Mat TrainingData::GetFlattenedImagesMat(const vector<LabeledCharacter>& training_chars) {
-  Mat flattened_imgs;
+Mat TrainingData::GetFlattenedCharsMat() {
+  Mat flattened_chars;
   Mat flat2;
   Mat flat3;
-  for (LabeledCharacter character : training_chars) {
-    Mat single_img;
-    character.character.GetMatrix().convertTo(single_img, CV_32F);
-
-  single_img = single_img.reshape(1,1);
-
-    flattened_imgs.push_back(single_img);
+  for (LabeledCharacter labeled_char : labeled_chars_) {
+    Mat single_char = labeled_char.character.GetFlattenedMatrix();
+    flattened_chars.push_back(single_char);
   }
-  return flattened_imgs;
+  return flattened_chars;
 }
 
 }

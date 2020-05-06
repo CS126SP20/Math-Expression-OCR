@@ -29,6 +29,7 @@ TEST_CASE("Save trained model") {
 }
 
 TEST_CASE("Trained model has desirable accuracy") {
+  //TODO fix
   KNN_Model model("../../../../../../assets/knn_resize.xml");
  vector<LabeledCharacter> eval_chars = GetLabeledCharacters("../../../../../../assets/test/",
       "../../../../../../assets/test_labels.txt");

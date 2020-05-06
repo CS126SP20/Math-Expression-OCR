@@ -17,19 +17,23 @@ using cv::Mat;
 namespace ocr {
 const size_t kMinContourArea = 150;
 
-struct Contour {
-  vector<cv::Point> contour_points;
-  cv::Rect bounding_rect;
-};
-
 
 class Image {
  public:
+  /**
+   * Creates an image object from an image file
+   * @param path the path to the image to create an object from
+   */
   Image(const string& path);
+  /**
+   * @return A vector of characters that the image contains, extracted based on
+   * contours found in the image
+   */
   vector<Character> GetCharacters();
 
 
  private:
+  /** Matrix of pixels in the image **/
   Mat original_mat_;
   Mat processed_mat_;
   vector<vector<cv::Point>> GetValidContours() const;

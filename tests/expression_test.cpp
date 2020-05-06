@@ -26,7 +26,7 @@ TEST_CASE("Simple operation expressions") {
 
   SECTION("Division") {
     Expression exp(" 6 / 3");
-    REQUIRE(exp.Evaluate() == Approx(5.0 / 3.0));
+    REQUIRE(exp.Evaluate() == "2.000000");
   }
 
 }

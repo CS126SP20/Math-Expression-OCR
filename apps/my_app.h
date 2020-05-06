@@ -10,20 +10,31 @@
 
 using cinder::gl::Texture2dRef;
 using ocr::KNN_Model;
+
 namespace myapp {
 const char kNormalFont[] = "Arial Unicode MS";
 const string kModelPath = "../../../../../../assets/knn_resize.xml";
-const size_t kFontSize = 50;
+const size_t kFontSize = 30;
 const size_t kCenterX = 400;
 const size_t kCenterY = 400;
-const cinder::vec2 kImagePosition = {200, 0};
+const size_t kImageOffset = 125;
+const cinder::vec2 kImageSize = {250, 250};
 const cinder::vec2 kTrainingStatusSize = {300, 70};
+const cinder::vec2 kTrainingCompleteSize = {500, 120};
 const cinder::vec2 kDetectedCharactersSize = {500, 60};
-const size_t kDetectedCharacterOffset = 20;
-const size_t kEvaluatedExpressionOffset = 70;
+const size_t kDetectedCharacterOffset = 40;
+const size_t kEvaluatedExpressionOffset = 90;
 const cinder::vec2 kEvaluatedExpressionSize = {700, 60};
 
+enum class TrainingState {
+  NotStarted,
+  Training,
+  Trained,
+};
+
 class MyApp : public cinder::app::App {
+
+
  public:
 
   MyApp();
@@ -36,9 +47,9 @@ class MyApp : public cinder::app::App {
  private:
   KNN_Model model;
   Texture2dRef texture;
-  bool should_start_training;
-  bool model_is_training;
-  bool model_is_saved;
+  TrainingState current_state_;
+  bool displayed_status;
+
 
   void PrintDetectedCharacters(const string& result);
   void PrintEvaluatedExpression(const string& exp);
