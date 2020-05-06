@@ -84,4 +84,5 @@ vector<LabeledCharacter> TrainingData::GetLabeledCharacters() const {
     return labeled_chars_;
 }
 
+
 }

@@ -9,21 +9,19 @@
 #include <ocr/labels.h>
 #include <ocr/matrix_utils.h>
 #include <opencv2/ml/ml.hpp>
+#include <filesystem>
 
 using cv::Ptr;
 using cv::Ptr;
 using ocr::TrainingData;
 using cv::ml::KNearest;
 using ocr::Image;
+using std::__fs::filesystem::exists;
 
 namespace ocr {
 
 KNN_Model::KNN_Model() {
   model_ = KNearest::create();
-}
-
-KNN_Model::KNN_Model(const string& saved_model) {
-  Load(saved_model);
 }
 
 void KNN_Model::Train(const string& training_img_dir,
@@ -42,10 +40,19 @@ void KNN_Model::Save(const string& path) const {
 }
 
 void KNN_Model::Load(const string& path) {
+  if (!exists(path)) {
+    throw "No file exists at this path";
+  }
   model_ = KNearest::load(path);
 }
 
 string KNN_Model::ClassifyImage(const string& image_path) const {
+  if (!IsTrained()) {
+    throw "Could not classify image, model has not been trained";
+  }
+  if (!exists(image_path)) {
+    throw "This image does not exist, please check your path and try again";
+  }
   string all_labels;
   Image image(image_path);
   vector<Character> all_characters = image.GetCharacters();

@@ -12,6 +12,8 @@ Expression::Expression(const string& exp) {
   expression_str = exp;
 }
 
+typedef exprtk::expression<double> expression;
+typedef exprtk::parser<double> parser;
 string Expression::Evaluate() {
   parser exp_parser;
   expression exp_to_evaluate;

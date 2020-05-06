@@ -50,4 +50,45 @@ TEST_CASE("Solves equation with grouping symbols") {
 
 }
 
+TEST_CASE("Multi digit expressions") {
+  SECTION("Addition") {
+    Expression exp("33 + 66");
+    REQUIRE(exp.Evaluate() == "99.000000");
+  }
+  SECTION("Subtraction") {
+    Expression exp("66 - 33");
+    REQUIRE(exp.Evaluate() == "33.000000");
+  }
+
+  SECTION("Multiplication") {
+    Expression exp("12 * 15");
+    REQUIRE(exp.Evaluate() == "180.000000");
+  }
+
+  SECTION("Division") {
+    Expression exp("33 / 11");
+    REQUIRE(exp.Evaluate() == "3.000000");
+  }
+}
+
+TEST_CASE("Invalid expressions") {
+  SECTION("Nonsensical order of symbols") {
+    Expression exp("(+)");
+    REQUIRE(exp.Evaluate() == "Could not evaluate expression");
+  }
+
+  SECTION("Multiple operations in a row") {
+    Expression exp("3 ** 5");
+    REQUIRE(exp.Evaluate() == "Could not evaluate expression");
+  }
+
+  SECTION("Empty expression") {
+    Expression exp("");
+    REQUIRE(exp.Evaluate() == "Could not evaluate expression");
+  }
+  SECTION("Blank expression") {
+    Expression exp("       ");
+    REQUIRE(exp.Evaluate() == "Could not evaluate expression");
+  }
+}
 

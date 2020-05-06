@@ -28,14 +28,25 @@ TEST_CASE("Save trained model") {
   REQUIRE(exists("../../../../../../tests/assets/model.xml"));
 }
 
-TEST_CASE("Model is loaded correctly") {
+TEST_CASE("Error for loading from nonexistent path") {
   KNN_Model model;
-  model.Train(training_img_path, label_path);
-  model.Save("../../../../../../tests/assets/model.xml");
+  REQUIRE_THROWS(model.Load("bad/path"));
 }
 
+TEST_CASE("Classify image before model has been trained") {
+  KNN_Model model;
+  REQUIRE_THROWS(model.ClassifyImage("../../../../../../tests/assets/5chars.jpg"));
+}
+TEST_CASE("Bad image path") {
+  KNN_Model model;
+  model.Load("../../../../../../tests/assets/model.xml");
+  REQUIRE_THROWS(model.ClassifyImage("bad/path"));
+}
+
+
 TEST_CASE("Trained model has desirable accuracy") {
-  KNN_Model model("../../../../../../assets/knn_resize.xml");
+  KNN_Model model;
+  model.Load("../../../../../../assets/knn_resize.xml");
   TrainingData data("../../../../../../assets/test/",
       "../../../../../../assets/test_labels.txt");
   vector<LabeledCharacter> eval_chars = data.GetLabeledCharacters();

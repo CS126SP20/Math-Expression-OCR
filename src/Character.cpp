@@ -5,7 +5,7 @@
 #include "ocr/Character.h"
 
 #include <ocr/matrix_utils.h>
-
+#include <ocr/Image.h>
 #include <filesystem>
 #include <opencv2/highgui.hpp>
 #include <opencv2/imgcodecs.hpp>

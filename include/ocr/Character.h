@@ -24,9 +24,16 @@ const size_t kCharacterHeight = 30;
 class Character {
 
  public:
-
+  /**
+   * Creates a character object from a training character
+   * @param filepath path to the character image
+   */
   explicit Character(const string& filepath);
-  Character(const cv::Mat& mat);
+  /**
+   * Creates a character object from a matrix that is a portion of an image
+   * @param mat the extracted matrix from the image
+   */
+  explicit Character(const cv::Mat& mat);
   /**
    * @return The character matrix that has been flattened and converted to floats
    */
@@ -39,11 +46,13 @@ class Character {
    */
   void PadCharacter();
 };
-
+/**
+ * A struct that contains a Character object and its label.
+ * Used in model training and evaluation
+ */
 struct LabeledCharacter {
   Character character;
   char label;
 };
 }
-
 #endif  // FINALPROJECT_CHARACTER_H
