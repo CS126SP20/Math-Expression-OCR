@@ -34,8 +34,6 @@ vector<Character> Image::GetCharacters() {
     Mat character_mat = GetMatFromContour(contour);
     characters_in_img.push_back(Character(character_mat));
   }
-  cv::imshow("detected", processed_mat_);
-  cv::waitKey(0);
 
   return characters_in_img;
 }

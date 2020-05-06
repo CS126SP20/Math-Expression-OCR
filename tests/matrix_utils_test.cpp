@@ -17,7 +17,7 @@ TEST_CASE("Process matrix test with resize") {
   }
 
   SECTION("Matrix column resize") {
-    REQUIRE(simple_mat.cols == 30);
+    REQUIRE(simple_mat.cols == 20);
   }
 
   SECTION("Matrix is grayscale now") {

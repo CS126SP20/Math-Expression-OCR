@@ -5,9 +5,9 @@
 #include "ocr/KNN_Model.h"
 
 #include <ocr/Image.h>
+#include <ocr/TrainingData.h>
 #include <ocr/labels.h>
 #include <ocr/matrix_utils.h>
-#include <ocr/training_utils.h>
 
 #include <opencv2/highgui.hpp>
 #include <opencv2/imgproc.hpp>
@@ -68,22 +68,15 @@ bool KNN_Model::IsTrained() const {
 
 double KNN_Model::EvaluateModel(vector<LabeledCharacter> labeled_chars) const {
   double num_correct = 0;
-  int total = 0;
   for (LabeledCharacter labeled_character : labeled_chars) {
     string predicted_label = ClassifySingleCharacter(labeled_character.character);
     if (predicted_label == labeled_character.label) {
-
-        cv::imshow(predicted_label, labeled_character.character.GetMatrix());
-        cv::waitKey(0);
-        cv::destroyWindow(predicted_label);
-        std::cout << total << std::endl;
       num_correct++;
     }
-    total++;
   }
 
-  std::cout << "size " << labeled_chars.size() << std::endl;
-  std::cout << "num correct" << num_correct << std::endl;
+  std::cout << "Total Samples: " << labeled_chars.size() << std::endl;
+  std::cout << "Number Correct: " << num_correct << std::endl;
   return (num_correct / labeled_chars.size()) * 100;
 }
 
@@ -91,7 +84,7 @@ string KNN_Model::ClassifySingleCharacter(
     const Character& character_to_classify) const {
   Mat results(0, 0, CV_32F);
   Mat flattened_character_mat = character_to_classify.GetMatrix();
-  cv::resize(flattened_character_mat, flattened_character_mat, cv::Size(20,30));
+  cv::resize(flattened_character_mat, flattened_character_mat, cv::Size(kCharacterWidth,kCharacterHeight));
   flattened_character_mat = flattened_character_mat.reshape(1, 1);
   flattened_character_mat.convertTo(flattened_character_mat, CV_32F);
   model_->findNearest(flattened_character_mat, kNumNearest, results);

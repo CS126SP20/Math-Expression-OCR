@@ -16,6 +16,12 @@ const string kModelPath = "../../../../../../assets/knn_resize.xml";
 const size_t kFontSize = 50;
 const size_t kCenterX = 400;
 const size_t kCenterY = 400;
+const cinder::vec2 kImagePosition = {200, 0};
+const cinder::vec2 kTrainingStatusSize = {300, 70};
+const cinder::vec2 kDetectedCharactersSize = {500, 60};
+const size_t kDetectedCharacterOffset = 20;
+const size_t kEvaluatedExpressionOffset = 70;
+const cinder::vec2 kEvaluatedExpressionSize = {700, 60};
 
 class MyApp : public cinder::app::App {
  public:

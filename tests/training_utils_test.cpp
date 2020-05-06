@@ -2,9 +2,10 @@
 // Created by Rohini Sharma on 4/28/20.
 //
 
-#include <catch2/catch.hpp>
-#include <ocr/training_utils.h>
 #include <ocr/Character.h>
+#include <ocr/TrainingData.h>
+
+#include <catch2/catch.hpp>
 #include <iostream>
 
 using ocr::GetFlattenedImagesMat;
@@ -29,15 +30,14 @@ TEST_CASE("Invalid file paths") {
   }
 }
 
-
-TEST_CASE("Valid paths") {
+TEST_CASE("Valid path") {
   REQUIRE(GetLabeledCharacters(correct_training_img_path, correct_label_path).size() == 5);
 }
 
 TEST_CASE("Exception thrown for too few labels") {
-  string training_label = "../../../../../../tests/assets/too_few_labels.txt";
+  string img_dir = "../../../../../../tests/assets/too_few_images/";
   REQUIRE_THROWS(
-      GetLabeledCharacters(correct_training_img_path, training_label));
+      GetLabeledCharacters(img_dir, correct_label_path));
 }
 
 TEST_CASE("Numerical Labels Mat Test") {
@@ -58,7 +58,7 @@ TEST_CASE("Flattened images mat test") {
   }
 
   SECTION("Flattened image matrix has correct number of columns") {
-    REQUIRE(flattened_imgs.cols == 900);
+    REQUIRE(flattened_imgs.cols == 600);
   }
 }
 

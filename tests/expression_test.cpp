@@ -24,28 +24,28 @@ TEST_CASE("Simple operation expressions") {
     REQUIRE(exp.Evaluate() == "15");
   }
 
-//  SECTION("Division") {
-//    Expression exp("5 / 3");
-//    REQUIRE(exp.Evaluate() == Approx(5.0 / 3.0));
-//  }
+  SECTION("Division") {
+    Expression exp(" 6 / 3");
+    REQUIRE(exp.Evaluate() == Approx(5.0 / 3.0));
+  }
 
 }
 
 TEST_CASE("Solves expression according to order of equations") {
   Expression exp("3 * 7 + 8");
-  REQUIRE(exp.Evaluate() == "29");
+  REQUIRE(exp.Evaluate() == "29.000000");
 }
 
 TEST_CASE("Solves equation with grouping symbols") {
 
   SECTION("Parentheses") {
     Expression exp("5 * (3+4)");
-    REQUIRE(exp.Evaluate() == "35");
+    REQUIRE(exp.Evaluate() == "35.000000");
   }
 
   SECTION("Brackets") {
     Expression exp("5 * [3 + 4]");
-    REQUIRE(exp.Evaluate() == "35");
+    REQUIRE(exp.Evaluate() == "35.000000");
   }
 
 }

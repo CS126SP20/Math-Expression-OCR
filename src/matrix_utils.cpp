@@ -4,6 +4,8 @@
 
 #include "ocr/matrix_utils.h"
 
+#include <ocr/Character.h>
+
 #include <opencv2/core.hpp>
 #include <opencv2/highgui.hpp>
 #include <opencv2/imgproc.hpp>
@@ -32,7 +34,7 @@ void ProcessMatrix(Mat& matrix, bool is_character_matrix) {
   //TODO fix magic nums
   if (is_character_matrix) {
     cv::resize(matrix, matrix,
-               cv::Size(20,30));
+               cv::Size(kCharacterWidth,kCharacterHeight));
     return;
   }
   Mat sobel_x, sobel_y, magnitude;
@@ -42,7 +44,7 @@ void ProcessMatrix(Mat& matrix, bool is_character_matrix) {
   cv::normalize(matrix, matrix, kNormAlpha, kNormBeta,
       cv::NORM_MINMAX, CV_8U);
 
-  Mat kernel = Mat::ones(kDialationKernelSize,kDialationKernelSize, CV_8U);
+  Mat kernel = Mat::ones(kKernelSize, kKernelSize, CV_8U);
   cv::dilate(matrix,matrix,kernel);
 
 

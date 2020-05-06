@@ -2,7 +2,7 @@
 // Created by Rohini Sharma on 4/28/20.
 //
 
-#include "ocr/training_utils.h"
+#include "ocr/TrainingData.h"
 
 #include <ocr/Character.h>
 #include <ocr/labels.h>
@@ -27,7 +27,12 @@ using cv::Mat1f;
 
 namespace ocr {
 
-vector<LabeledCharacter> GetLabeledCharacters(const string &characters_dir,
+TrainingData::TrainingData(const string& chars_dir, const string& label_path) {
+  labeled_chars_ = GetLabeledCharacters(chars_dir, label_path);
+}
+
+
+vector<LabeledCharacter> TrainingData::GetLabeledCharacters(const string &characters_dir,
     const string& label_path) {
   ifstream label_file(label_path);
   if (!exists(characters_dir) || !label_file.is_open()) {
@@ -51,7 +56,7 @@ vector<LabeledCharacter> GetLabeledCharacters(const string &characters_dir,
 
 }
 
- Mat GetNumericalLabelsMat(const vector<LabeledCharacter>& training_chars) {
+ Mat TrainingData::GetNumericalLabelsMat(const vector<LabeledCharacter>& training_chars) {
   vector<float> labels;
   for (LabeledCharacter character : training_chars) {
 
@@ -59,13 +64,12 @@ vector<LabeledCharacter> GetLabeledCharacters(const string &characters_dir,
       labels.push_back(numerical_label);
 
   }
-  //TODO fix ?
   Mat numerical_labels_mat(labels);
   numerical_labels_mat.convertTo(numerical_labels_mat, CV_32F);
   return numerical_labels_mat;
 }
 
-Mat GetFlattenedImagesMat(const vector<LabeledCharacter>& training_chars) {
+Mat TrainingData::GetFlattenedImagesMat(const vector<LabeledCharacter>& training_chars) {
   Mat flattened_imgs;
   Mat flat2;
   Mat flat3;
@@ -78,8 +82,6 @@ Mat GetFlattenedImagesMat(const vector<LabeledCharacter>& training_chars) {
     flattened_imgs.push_back(single_img);
   }
   return flattened_imgs;
-
 }
-
 
 }

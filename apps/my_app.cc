@@ -47,8 +47,6 @@ void MyApp::setup() {
     should_start_training = false;
     model_is_saved = false;
   }
-
-
 }
 
 void MyApp::update() {
@@ -68,7 +66,7 @@ void MyApp::update() {
 
 void MyApp::draw(){
   if (!FLAGS_train) {
-    cinder::gl::draw(texture, {200, 0});
+    cinder::gl::draw(texture, kImagePosition);
     string result = model.ClassifyImage(FLAGS_equation);
     PrintDetectedCharacters("Detected: " + result);
     Expression exp(result);
@@ -78,13 +76,13 @@ void MyApp::draw(){
     if (!should_start_training && !model.IsTrained()) {
       PrintText(
           "Training... ",
-          Color::white(), {300, 70}, getWindowCenter());
+          Color::white(), kTrainingStatusSize, getWindowCenter());
       should_start_training = true;
     }
     if (model_is_saved){
       PrintText(
           "Training Complete! ",
-          Color::white(), {500, 200}, getWindowCenter());
+          Color::white(), kTrainingStatusSize, getWindowCenter());
     }
   }
 }
@@ -92,17 +90,15 @@ void MyApp::draw(){
 void MyApp::keyDown(KeyEvent event) { }
 
 void MyApp::PrintDetectedCharacters(const string& result) {
-  const cinder::vec2 position  = {kCenterX, texture->getSize().y + 20 };
-  const cinder::ivec2 size = {500, 60};
-  const Color color = Color::white();
-  PrintText(result, color, size, position);
+  const cinder::vec2 position  = {kCenterX, texture->getSize().y +
+                                  kDetectedCharacterOffset};
+  PrintText(result, Color::white(), kDetectedCharactersSize, position);
 }
 
 void MyApp::PrintEvaluatedExpression(const string& exp) {
-  const cinder::vec2 position  = {kCenterX, texture->getSize().y + 70 };
-  const cinder::ivec2 size = {700, 60};
-  const Color color = Color::white();
-  PrintText(exp, color, size, position);
+  const cinder::vec2 position  = {kCenterX, texture->getSize().y +
+                                  kEvaluatedExpressionOffset};
+  PrintText(exp, Color::white(), kEvaluatedExpressionSize, position);
 }
 
 void ShowTrainingStatus() {

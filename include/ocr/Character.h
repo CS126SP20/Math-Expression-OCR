@@ -12,7 +12,10 @@ using std::vector;
 using std::string;
 namespace ocr {
 
-
+const cv::Scalar kPadValue = cv::Scalar(255, 255, 255);
+const double kPadRatio = 0.5;
+const size_t kCharacterWidth = 20;
+const size_t kCharacterHeight = 30;
 
 class Character {
 
@@ -22,6 +25,8 @@ class Character {
   cv::Mat GetMatrix() const;
  private:
   cv::Mat character_mat_;
+
+  void PadCharacter();
 };
 
 struct LabeledCharacter {
