@@ -1,11 +1,11 @@
 # Development 
-Week 1
+### Week 1
 
 Got CMake set up, project compiles properly. I started out using the OpenCV cinder block, but then ran into a lot of issues with that. 
 The cinder block was very old and there wasn't a lot of support for it, so I switched to using the regular OpenCV library instead. I was able to compile the 
 OpenCV library and add it to my project.
 
-Week 2
+### Week 2
 
 I decided to pivot my project a little bit to focus on evaluating written mathematical expressions. I decided to use the 
 CROHME mathematical symbol dataset. I first had to process the training data, as the dataset comes in the inkml format. I 
@@ -16,6 +16,11 @@ be provided by the user. I also created methods to extract Characters from each 
 I created a KNN_Model class with methods for training a model and saving it the trained model to the file. I am also making methods
 in the model class to classify an image by getting its characters and then classifying those individually.   
 
+### Week 3
+This week I first worked on getting my trained model to be more accurate. I added padding to the characters extracted from the image
+so they wouldn't lose their shape when resized, and this helped a lot. I used the created an Expression class, where I used ExprTk library to evaluate a string 
+math expression. I then created a simple UI to display the image and its evaluation to the user. I also added 
+a command line argument parser to handle arguments passed in by a user.   
 
 
 ---

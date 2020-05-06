@@ -10,7 +10,7 @@
 
 using ocr::KNN_Model;
 using ocr::LabeledCharacter;
-using ocr::GetLabeledCharacters;
+using ocr::TrainingData;
 using std::__fs::filesystem::exists;
 
 string training_img_path = "../../../../../../tests/assets/test_images/";
@@ -31,8 +31,9 @@ TEST_CASE("Save trained model") {
 TEST_CASE("Trained model has desirable accuracy") {
   //TODO fix
   KNN_Model model("../../../../../../assets/knn_resize.xml");
- vector<LabeledCharacter> eval_chars = GetLabeledCharacters("../../../../../../assets/test/",
+  TrainingData data("../../../../../../assets/test/",
       "../../../../../../assets/test_labels.txt");
+  vector<LabeledCharacter> eval_chars = data.GetLabeledCharacters();
   REQUIRE(model.EvaluateModel(eval_chars) > 75.00);
 }
 

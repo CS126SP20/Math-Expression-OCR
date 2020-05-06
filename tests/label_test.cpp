@@ -9,7 +9,7 @@ using ocr::label_and_num_map_;
 
 TEST_CASE("Label bimap initializaton") {
   SECTION("Check for correct size") {
-    REQUIRE(label_and_num_map_.size() == 39);
+    REQUIRE(label_and_num_map_.size() == 17);
   }
 
   SECTION("Access number with string key") {

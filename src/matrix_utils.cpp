@@ -22,7 +22,7 @@ using cv::HOGDescriptor;
 
 namespace ocr {
 
-void ProcessMatrix(Mat& matrix, bool is_character_matrix) {
+void ProcessMatrix(Mat& matrix) {
   cv::cvtColor(matrix, matrix, cv::COLOR_BGR2GRAY);
   cv::fastNlMeansDenoising(matrix, matrix);
   cv::GaussianBlur(matrix, matrix,
@@ -31,30 +31,12 @@ void ProcessMatrix(Mat& matrix, bool is_character_matrix) {
                         cv::ADAPTIVE_THRESH_GAUSSIAN_C,
                         cv::THRESH_BINARY, kBlockSize,
                         kThresholdConstant);
-  //TODO fix magic nums
-  if (is_character_matrix) {
-    cv::resize(matrix, matrix,
-               cv::Size(kCharacterWidth,kCharacterHeight));
-    return;
-  }
-  Mat sobel_x, sobel_y, magnitude;
-  cv::Sobel(matrix, sobel_x, CV_32F, 1,0);
-  cv::Sobel(matrix, sobel_y, CV_32F, 0,1);
-  cv::magnitude(sobel_x, sobel_y, matrix);
-  cv::normalize(matrix, matrix, kNormAlpha, kNormBeta,
-      cv::NORM_MINMAX, CV_8U);
-
-  Mat kernel = Mat::ones(kKernelSize, kKernelSize, CV_8U);
-  cv::dilate(matrix,matrix,kernel);
-
-
-
 }
 
-bool SortContours(const vector<cv::Point>& first, const vector<cv::Point>& second) {
-  //TODO put in a better place
-  cv::Rect firstr = cv::boundingRect(first);
-  cv::Rect secondr = cv::boundingRect(second);
-  return firstr.x < secondr.x;
-}
+//bool SortContours(const vector<cv::Point>& first, const vector<cv::Point>& second) {
+//  //TODO put in a better place
+//  cv::Rect firstr = cv::boundingRect(first);
+//  cv::Rect secondr = cv::boundingRect(second);
+//  return firstr.x < secondr.x;
+//}
 }

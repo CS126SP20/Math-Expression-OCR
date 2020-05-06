@@ -21,10 +21,12 @@ class TrainingData {
   TrainingData(const string& characters_dir, const string& label_file);
   Mat GetNumericalLabelsMat();
   Mat GetFlattenedCharsMat();
+  vector<LabeledCharacter> GetLabeledCharacters() const;
  private:
   vector<LabeledCharacter> labeled_chars_;
-  vector<LabeledCharacter> GetLabeledCharacters(const string& characters_dir,
-                                               const string& label_file);
+  void CreateLabeledCharacters(const string& characters_dir,
+                                                const string& label_file);
+
 
 
 };

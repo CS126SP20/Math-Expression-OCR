@@ -38,6 +38,8 @@ class Image {
   Mat processed_mat_;
   vector<vector<cv::Point>> GetValidContours() const;
   Mat GetMatFromContour(const vector<cv::Point>& contour) const;
+  static bool SortContours(const vector<cv::Point>& first, const vector<cv::Point>& second);
+  void ProcessEdges();
 
 
 };

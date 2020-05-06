@@ -13,7 +13,6 @@ using std::__fs::filesystem::exists;
 using std::invalid_argument;
 using cv::Point;
 using ocr::ProcessMatrix;
-using ocr::SortContours;
 
 
 namespace ocr {
@@ -24,7 +23,8 @@ Image::Image(const string& path) {
   }
   original_mat_= cv::imread(path);
   processed_mat_ = original_mat_.clone();
-  ProcessMatrix(processed_mat_, false);
+  ProcessMatrix(processed_mat_);
+  ProcessEdges();
 }
 
 vector<Character> Image::GetCharacters() {
@@ -60,4 +60,23 @@ Mat Image::GetMatFromContour(const vector<Point>& contour) const {
   cv::cvtColor(region_of_interest, region_of_interest, cv::COLOR_BGR2GRAY);
   return region_of_interest;
 }
+
+void Image::ProcessEdges() {
+  Mat sobel_x, sobel_y, magnitude;
+  cv::Sobel(processed_mat_, sobel_x, CV_32F, 1,0);
+  cv::Sobel(processed_mat_, sobel_y, CV_32F, 0,1);
+  cv::magnitude(sobel_x, sobel_y, processed_mat_);
+  cv::normalize(processed_mat_, processed_mat_, kNormAlpha, kNormBeta,
+                cv::NORM_MINMAX, CV_8U);
+
+  Mat kernel = Mat::ones(kKernelSize, kKernelSize, CV_8U);
+  cv::dilate(processed_mat_,processed_mat_,kernel);
+}
+
+bool Image::SortContours(const vector<cv::Point>& first, const vector<cv::Point>& second) {
+  cv::Rect firstr = cv::boundingRect(first);
+  cv::Rect secondr = cv::boundingRect(second);
+  return firstr.x < secondr.x;
+}
+
 }

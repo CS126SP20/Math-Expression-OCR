@@ -28,11 +28,11 @@ using cv::Mat1f;
 namespace ocr {
 
 TrainingData::TrainingData(const string& chars_dir, const string& label_path) {
-  labeled_chars_ = GetLabeledCharacters(chars_dir, label_path);
+    CreateLabeledCharacters(chars_dir, label_path);
 }
 
 
-vector<LabeledCharacter> TrainingData::GetLabeledCharacters(const string &characters_dir,
+void TrainingData::CreateLabeledCharacters(const string &characters_dir,
     const string& label_path) {
   ifstream label_file(label_path);
   if (!exists(characters_dir) || !label_file.is_open()) {
@@ -52,7 +52,7 @@ vector<LabeledCharacter> TrainingData::GetLabeledCharacters(const string &charac
     created_characters.push_back(training_character);
     file_num++;
   }
-  return created_characters;
+  labeled_chars_ =  created_characters;
 
 }
 
@@ -78,6 +78,10 @@ Mat TrainingData::GetFlattenedCharsMat() {
     flattened_chars.push_back(single_char);
   }
   return flattened_chars;
+}
+
+vector<LabeledCharacter> TrainingData::GetLabeledCharacters() const {
+    return labeled_chars_;
 }
 
 }

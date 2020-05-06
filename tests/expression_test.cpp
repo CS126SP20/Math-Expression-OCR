@@ -11,17 +11,17 @@ TEST_CASE("Simple operation expressions") {
 
   SECTION("Addition") {
     Expression exp("3 + 5");
-    REQUIRE(exp.Evaluate() == "8");
+    REQUIRE(exp.Evaluate() == "8.000000");
   }
 
   SECTION("Subtraction") {
     Expression exp("5 - 3");
-    REQUIRE(exp.Evaluate() == "2");
+    REQUIRE(exp.Evaluate() == "2.000000");
   }
 
   SECTION("Multiplication") {
     Expression exp("5 * 3");
-    REQUIRE(exp.Evaluate() == "15");
+    REQUIRE(exp.Evaluate() == "15.000000");
   }
 
   SECTION("Division") {

@@ -28,12 +28,13 @@ Character::Character(const string& filepath) {
     throw invalid_argument("Could not find character at path: " + filepath);
   }
   character_mat_ = cv::imread(filepath);
-  ProcessMatrix(character_mat_, true);
+  ProcessMatrix(character_mat_);
+  cv::resize(character_mat_, character_mat_,
+             cv::Size(kCharacterWidth,kCharacterHeight));
 }
 
 Character::Character(const cv::Mat& mat) {
   character_mat_ = mat;
-
   PadCharacter();
   Mat kernel = Mat::ones(kKernelSize, kKernelSize, CV_8U);
   cv::erode(character_mat_,character_mat_,kernel);
