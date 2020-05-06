@@ -28,9 +28,11 @@ class MyApp : public cinder::app::App {
   void keyDown(cinder::app::KeyEvent) override;
 
  private:
-  string path = "../../../../../../tests/assets/5chars.jpg";
   KNN_Model model;
   Texture2dRef texture;
+  bool should_start_training;
+  bool model_is_training;
+  bool model_is_saved;
 
   void PrintDetectedCharacters(const string& result);
   void PrintEvaluatedExpression(const string& exp);

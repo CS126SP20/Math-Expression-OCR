@@ -1,12 +1,13 @@
 // Copyright (c) 2020 [Your Name]. All rights reserved.
 
 #include "my_app.h"
+#include <gflags/gflags.h>
 #include <cinder/app/App.h>
 #include <cinder/gl/gl.h>
 #include <opencv2/highgui/highgui.hpp>
 #include <ocr/KNN_Model.h>
-#include <expression_evaluation/Expression.h>
 #include <ocr/Image.h>
+#include <expression_evaluation/Expression.h>
 #include <filesystem>
 
 using ocr::KNN_Model;
@@ -24,32 +25,68 @@ namespace myapp {
 using cinder::gl::Texture2d;
 using cinder::app::KeyEvent;
 
+DECLARE_string(equation);
+DECLARE_string(model);
+DECLARE_bool(train);
+DECLARE_string(training_images);
+DECLARE_string(training_labels);
+DECLARE_string(model_save_path);
+
+
 MyApp::MyApp() {
-  model.Load(kModelPath);
+
+
 }
 
 void MyApp::setup() {
-  auto img = cinder::loadImage(path);
-  texture = Texture2d::create(img);
+  if (!FLAGS_train) {
+    auto img = cinder::loadImage(FLAGS_equation);
+    model.Load(FLAGS_model);
+    texture = Texture2d::create(img);
+  } else {
+    should_start_training = false;
+    model_is_saved = false;
+  }
 
 
 }
 
 void MyApp::update() {
+  if (FLAGS_train) {
+    if (should_start_training) {
+      model.Train(FLAGS_training_images, FLAGS_training_labels);
+      should_start_training = false;
+      model_is_training = true;
+    }
+    if (model.IsTrained() && !model_is_saved) {
+      model.Save(FLAGS_model_save_path);
+      model_is_training = false;
+      model_is_saved = true;
+    }
+  }
 }
 
 void MyApp::draw(){
-  cinder::gl::draw(texture, {200, 0});
-
-  string result = model.ClassifyImage(path);
-  PrintDetectedCharacters("Detected: " + result);
-  Expression exp(result);
-  string evaluation = exp.Evaluate();
-  PrintEvaluatedExpression("Evaluation: " + evaluation);
-
-
-
-
+  if (!FLAGS_train) {
+    cinder::gl::draw(texture, {200, 0});
+    string result = model.ClassifyImage(FLAGS_equation);
+    PrintDetectedCharacters("Detected: " + result);
+    Expression exp(result);
+    string evaluation = exp.Evaluate();
+    PrintEvaluatedExpression("Evaluation: " + evaluation);
+  } else {
+    if (!should_start_training && !model.IsTrained()) {
+      PrintText(
+          "Training... ",
+          Color::white(), {300, 70}, getWindowCenter());
+      should_start_training = true;
+    }
+    if (model_is_saved){
+      PrintText(
+          "Training Complete! ",
+          Color::white(), {500, 200}, getWindowCenter());
+    }
+  }
 }
 
 void MyApp::keyDown(KeyEvent event) { }
@@ -66,6 +103,10 @@ void MyApp::PrintEvaluatedExpression(const string& exp) {
   const cinder::ivec2 size = {700, 60};
   const Color color = Color::white();
   PrintText(exp, color, size, position);
+}
+
+void ShowTrainingStatus() {
+
 }
 
 void MyApp::PrintText(const string& text, const Color& color, const cinder::ivec2& size,
