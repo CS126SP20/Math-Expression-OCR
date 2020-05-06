@@ -34,11 +34,11 @@ TEST_CASE("Exception thrown for too few labels") {
 }
 
 TEST_CASE("Numerical Labels Mat Test") {
-  //TODO fix
   TrainingData training_data(correct_training_img_path, correct_label_path);
   float data[5] = {9,15,15,1,2};
   Mat expected = Mat(1, 5, CV_32F, data);
-  Mat differences = training_data.GetNumericalLabelsMat() != expected;
+  Mat actual = training_data.GetNumericalLabelsMat().t();
+  Mat differences = actual != expected;
   REQUIRE(cv::countNonZero(differences) == 0);
 }
 

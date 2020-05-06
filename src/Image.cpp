@@ -49,12 +49,11 @@ vector<vector<Point>> Image::GetValidContours() const {
 
     }
   }
-  //TODO sort contours left to right if needed
   std::sort(valid_contours.begin(), valid_contours.end(), SortContours);
   return valid_contours;
 }
 
-Mat Image::GetMatFromContour(const vector<Point>& contour) const {
+Mat Image::GetMatFromContour(const vector<Point>& contour) {
   cv::Rect bounds = cv::boundingRect(contour);
   Mat region_of_interest = original_mat_(bounds).clone();
   cv::cvtColor(region_of_interest, region_of_interest, cv::COLOR_BGR2GRAY);
@@ -73,7 +72,8 @@ void Image::ProcessEdges() {
   cv::dilate(processed_mat_,processed_mat_,kernel);
 }
 
-bool Image::SortContours(const vector<cv::Point>& first, const vector<cv::Point>& second) {
+bool Image::SortContours(const vector<cv::Point>& first,
+    const vector<cv::Point>& second) {
   cv::Rect firstr = cv::boundingRect(first);
   cv::Rect secondr = cv::boundingRect(second);
   return firstr.x < secondr.x;

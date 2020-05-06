@@ -31,7 +31,7 @@ class KNN_Model {
 
  private:
   cv::Ptr<KNearest> model_;
-  string ClassifySingleCharacter(const Character& character_to_classify) const;
+  char ClassifySingleCharacter(const Character& character_to_classify) const;
 
 
 };

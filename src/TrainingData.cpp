@@ -48,7 +48,7 @@ void TrainingData::CreateLabeledCharacters(const string &characters_dir,
       throw invalid_argument("Please make sure you have enough characters in your directory ");
     }
     Character training_char(character_path);
-    LabeledCharacter training_character {training_char, label_line};
+    LabeledCharacter training_character {training_char, label_line[0]};
     created_characters.push_back(training_character);
     file_num++;
   }

@@ -32,11 +32,4 @@ void ProcessMatrix(Mat& matrix) {
                         cv::THRESH_BINARY, kBlockSize,
                         kThresholdConstant);
 }
-
-//bool SortContours(const vector<cv::Point>& first, const vector<cv::Point>& second) {
-//  //TODO put in a better place
-//  cv::Rect firstr = cv::boundingRect(first);
-//  cv::Rect secondr = cv::boundingRect(second);
-//  return firstr.x < secondr.x;
-//}
 }

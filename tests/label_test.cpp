@@ -13,11 +13,11 @@ TEST_CASE("Label bimap initializaton") {
   }
 
   SECTION("Access number with string key") {
-    REQUIRE(label_and_num_map_.left.at("0") == 0);
+    REQUIRE(label_and_num_map_.left.at('0') == 0);
   }
 
   SECTION("Access string with number key") {
-    REQUIRE(label_and_num_map_.right.at(0) == "0");
+    REQUIRE(label_and_num_map_.right.at(0) == '0');
   }
 }
 

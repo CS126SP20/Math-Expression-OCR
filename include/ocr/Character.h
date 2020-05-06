@@ -42,7 +42,7 @@ class Character {
 
 struct LabeledCharacter {
   Character character;
-  string label;
+  char label;
 };
 }
 

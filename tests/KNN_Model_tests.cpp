@@ -28,8 +28,13 @@ TEST_CASE("Save trained model") {
   REQUIRE(exists("../../../../../../tests/assets/model.xml"));
 }
 
+TEST_CASE("Model is loaded correctly") {
+  KNN_Model model;
+  model.Train(training_img_path, label_path);
+  model.Save("../../../../../../tests/assets/model.xml");
+}
+
 TEST_CASE("Trained model has desirable accuracy") {
-  //TODO fix
   KNN_Model model("../../../../../../assets/knn_resize.xml");
   TrainingData data("../../../../../../assets/test/",
       "../../../../../../assets/test_labels.txt");

@@ -50,3 +50,4 @@ TEST_CASE("Solves equation with grouping symbols") {
 
 }
 
+

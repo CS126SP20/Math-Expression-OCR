@@ -7,7 +7,7 @@
 
 using ocr::Image;
 
-TEST_CASE("Image of 5  characters") {
+TEST_CASE("Image of 5 characters") {
   Image five_characters("../../../../../../tests/assets/5chars.jpg");
   vector<Character> characters = five_characters.GetCharacters();
   REQUIRE(characters.size() == 5);

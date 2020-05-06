@@ -24,7 +24,6 @@ const double kNormAlpha = 0;
 const double kNormBeta = 255;
 
 void ProcessMatrix(Mat& matrix);
-//bool SortContours(const vector<cv::Point>& first, const vector<cv::Point>& second);
 
 }
 

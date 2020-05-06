@@ -50,7 +50,7 @@ string KNN_Model::ClassifyImage(const string& image_path) const {
   Image image(image_path);
   vector<Character> all_characters = image.GetCharacters();
     for (Character character : all_characters) {
-      all_labels.append(ClassifySingleCharacter(character));
+      all_labels += ClassifySingleCharacter(character);
     }
   return all_labels;
 }
@@ -62,7 +62,7 @@ bool KNN_Model::IsTrained() const {
 double KNN_Model::EvaluateModel(vector<LabeledCharacter> labeled_chars) const {
   double num_correct = 0;
   for (LabeledCharacter labeled_character : labeled_chars) {
-    string predicted_label = ClassifySingleCharacter(labeled_character.character);
+    char predicted_label = ClassifySingleCharacter(labeled_character.character);
     if (predicted_label == labeled_character.label) {
       num_correct++;
     }
@@ -72,14 +72,14 @@ double KNN_Model::EvaluateModel(vector<LabeledCharacter> labeled_chars) const {
   return (num_correct / labeled_chars.size()) * 100;
 }
 
-string KNN_Model::ClassifySingleCharacter(
+char KNN_Model::ClassifySingleCharacter(
     const Character& character_to_classify) const {
   Mat results(0, 0, CV_32F);
   Mat flattened_character_mat = character_to_classify.GetFlattenedMatrix();
 
   model_->findNearest(flattened_character_mat, kNumNearest, results);
   float numerical_label = results.at<float>(0, 0);
-  string label = label_and_num_map_.right.at(numerical_label);
+  char label = label_and_num_map_.right.at(numerical_label);
   return label;
 }
 }
