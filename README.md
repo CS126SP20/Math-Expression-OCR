@@ -40,7 +40,8 @@ training directory must be in the format X.JPG where X is the line number of the
 corresponding label for the image. Use the ```--model_save_path``` flag to specify the path where you would like your new model
 saved.
 
-If ```--train``` is passed without training images or training labels, the default training data will be used. If 
+If ```--train``` is passed without training images or training labels, ```assets/training/``` is the default path for 
+training images and ```assets/train_labels.txt``` is the path for training labels. If 
 ```--model_save_path``` is not specified, the model will be saved at ```assets/my_model.xml```
 
 ### Evaluating an expression
@@ -49,7 +50,7 @@ image will be used. If you wish to use a model other than the default KNN Model,
 ```--model``` flag. This model must be an .xml or .yml format. 
  
 #### Examples 
-Train a model using default training data:  
+Train a model using default training data path:  
 
 ```cinder-myapp --train```
 
@@ -64,7 +65,6 @@ Evaluate default expression image:
 Evaluate expression image at ```~/my_equation.jpg``` using model at ```~/my_new_model.xml```
 
 ```cinder-myapp --equation ~/my_equation.jpg --model ~/my_new_model.xml```
-
 
 
 

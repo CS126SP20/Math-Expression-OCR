@@ -16,6 +16,10 @@ namespace ocr {
 /** Number of nearest neighbor points to look at to classify a character **/
 const size_t kNumNearest = 5;
 
+/**
+ * Represents a K-Nearest Neighbors
+ * model that can be trained or used to evaluate an image
+ */
 class KNN_Model {
  public:
   /**

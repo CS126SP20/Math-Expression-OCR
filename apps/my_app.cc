@@ -33,11 +33,11 @@ MyApp::MyApp() = default;
 
 void MyApp::setup() {
   if (!FLAGS_train) {
-    Surface img = cinder::loadImage(FLAGS_equation);
-    img = cinder::ip::resizeCopy(img,
-        Area(0,0,img.getWidth(),img.getHeight()),  kImageSize);
-    model.Load(FLAGS_model);
-    img_to_classify_texture_ = Texture2d::create(img);
+      Surface img = cinder::loadImage(FLAGS_equation);
+      img = cinder::ip::resizeCopy(img,
+                                   Area(0,0,img.getWidth(),img.getHeight()),  kImageSize);
+      model.Load(FLAGS_model);
+      img_to_classify_texture_ = Texture2d::create(img);
   } else {
     training_state_ = TrainingState::NotStarted;
     training_status_visible = false;

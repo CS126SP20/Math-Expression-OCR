@@ -23,6 +23,10 @@ const double kNormAlpha = 0;
 /** Beta value used to normalize image after Sobel operation**/
 const double kNormBeta = 255;
 
+/**
+ * Represents an image with a mathematical expression to be classified
+ * Image object can be broken up into its Characters
+ */
 class Image {
  public:
   /**

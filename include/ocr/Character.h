@@ -22,6 +22,10 @@ const size_t kCharacterWidth = 20;
 /** Height of character, in pixels **/
 const size_t kCharacterHeight = 30;
 
+/**
+ * Represents a single character/symbol found in a mathematical equation
+ * Many Characters can make up a single image
+ */
 class Character {
  public:
   /**

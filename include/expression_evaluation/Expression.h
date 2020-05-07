@@ -12,6 +12,9 @@ using std::string;
 
 namespace expression_evaluator {
 
+/**
+ * Represents a mathematical expression to be evaluated
+ */
 class Expression {
  public:
   /**

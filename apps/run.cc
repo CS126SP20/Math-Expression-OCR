@@ -14,7 +14,7 @@ DEFINE_string(training_images, "../../../../../../assets/training/", "path to th
 DEFINE_string(training_labels, "../../../../../../assets/train_labels.txt", "path to the training labels");
 DEFINE_string(model_save_path,"../../../../../../assets/my_model.xml", "Path to save model after training");
 DEFINE_bool(train, false, "Include this flag if you want to train a new model");
-DEFINE_string(equation, "../../../../../../tests/assets/addition.png", "Path to the image to evaluate");
+DEFINE_string(equation, "../../../../../../assets/equations/addition.png", "Path to the image to evaluate");
 DEFINE_string(model, "../../../../../../assets/my_model.xml", "Path to the model to use to evaluate the image");
 
 const int kSamples = 8;

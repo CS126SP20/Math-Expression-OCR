@@ -16,6 +16,9 @@ namespace ocr {
 /** File extension of training images **/
 const string training_image_type = ".jpg";
 
+/**
+ * Represents labeled training data that the model takes
+ */
 class TrainingData {
  public:
   /**
