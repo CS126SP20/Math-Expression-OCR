@@ -55,12 +55,11 @@ class KNN_Model {
    * @param labeled_chars A vector of LabeledCharacters used as the test dataset
    * @return the percent of correctly labeled characters.
    */
-  double EvaluateModel(vector<LabeledCharacter> labeled_chars) const;
+  double EvaluateModel(const vector<LabeledCharacter>& labeled_chars) const;
   /**
    * @return True if the model has been trained, false if not.
    */
   bool IsTrained() const;
-
  private:
   /**  A smart pointer for the KNN Model **/
   cv::Ptr<KNearest> model_;
@@ -73,6 +72,4 @@ class KNN_Model {
   char ClassifySingleCharacter(const Character& character_to_classify) const;
 };
 }
-
-
 #endif  // FINALPROJECT_KNN_MODEL_H

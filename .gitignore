@@ -146,4 +146,3 @@ _deps
 # Don't track database files.
 # assets/*.db
 # assets/*.sqlite*
-assets/*

@@ -52,11 +52,6 @@ class TrainingData {
    */
   void CreateLabeledCharacters(const string& characters_dir,
                                                 const string& label_file);
-
-
-
 };
-
 }
-
 #endif  // FINALPROJECT_TRAININGDATA_H

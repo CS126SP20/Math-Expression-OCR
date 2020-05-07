@@ -5,11 +5,7 @@
 #include <cinder/app/App.h>
 #include <cinder/gl/gl.h>
 #include <cinder/ip/Resize.h>
-#include <opencv2/highgui/highgui.hpp>
-#include <ocr/KNN_Model.h>
-#include <ocr/Image.h>
 #include <expression_evaluation/Expression.h>
-#include <filesystem>
 
 using ocr::KNN_Model;
 using ocr::Image;
@@ -21,11 +17,10 @@ using cinder::TextBox;
 using cinder::Color;
 using cinder::ColorA;
 using cinder::ip::resize;
-
-
-namespace myapp {
 using cinder::gl::Texture2d;
 using cinder::app::KeyEvent;
+
+namespace myapp {
 
 DECLARE_string(equation);
 DECLARE_string(model);
@@ -34,11 +29,7 @@ DECLARE_string(training_images);
 DECLARE_string(training_labels);
 DECLARE_string(model_save_path);
 
-
-MyApp::MyApp() {
-
-
-}
+MyApp::MyApp() = default;
 
 void MyApp::setup() {
   if (!FLAGS_train) {
@@ -46,24 +37,24 @@ void MyApp::setup() {
     img = cinder::ip::resizeCopy(img,
         Area(0,0,img.getWidth(),img.getHeight()),  kImageSize);
     model.Load(FLAGS_model);
-    texture = Texture2d::create(img);
+    img_to_classify_texture_ = Texture2d::create(img);
   } else {
-    current_state_ = TrainingState::NotStarted;
-    displayed_status = false;
+    training_state_ = TrainingState::NotStarted;
+    training_status_visible = false;
   }
 }
 
 void MyApp::update() {
   if (FLAGS_train) {
-    if (!displayed_status) {
+    if (!training_status_visible) {
       return;
     }
-    if (current_state_ == TrainingState::NotStarted) {
-      current_state_ = TrainingState::Training;
+    if (training_state_ == TrainingState::NotStarted) {
+      training_state_ = TrainingState::Training;
       model.Train(FLAGS_training_images, FLAGS_training_labels);
     }
-    if (model.IsTrained() && current_state_ == TrainingState::Training) {
-      current_state_ = TrainingState::Trained;
+    if (model.IsTrained() && training_state_ == TrainingState::Training) {
+      training_state_ = TrainingState::Trained;
       model.Save(FLAGS_model_save_path);
     }
   }
@@ -71,20 +62,20 @@ void MyApp::update() {
 
 void MyApp::draw(){
   if (!FLAGS_train) {
-    cinder::gl::draw(texture, {getWindowCenter().x - kImageOffset, 0});
+    cinder::gl::draw(img_to_classify_texture_, {getWindowCenter().x - kImageOffset, 0});
     string result = model.ClassifyImage(FLAGS_equation);
     PrintDetectedCharacters("Detected: " + result);
     Expression exp(result);
     string evaluation = exp.Evaluate();
     PrintEvaluatedExpression("Evaluation: " + evaluation);
   } else {
-    if (!displayed_status || current_state_ == TrainingState::Training) {
+    if (!training_status_visible || training_state_ == TrainingState::Training) {
       PrintText(
           "Training... ",
           Color::white(), kTrainingStatusSize, getWindowCenter());
-      displayed_status = true;
+      training_status_visible = true;
     }
-    if (current_state_ == TrainingState::Trained){
+    if (training_state_ == TrainingState::Trained){
       cinder::gl::clear(ColorA::black());
       PrintText(
           "Training Complete!"
@@ -97,13 +88,15 @@ void MyApp::draw(){
 void MyApp::keyDown(KeyEvent event) { }
 
 void MyApp::PrintDetectedCharacters(const string& result) {
-  const cinder::vec2 position  = {kCenterX, texture->getSize().y +
+  const cinder::vec2 position  = {getWindowCenter().x, 
+                                  img_to_classify_texture_->getSize().y +
                                   kDetectedCharacterOffset};
   PrintText(result, Color::white(), kDetectedCharactersSize, position);
 }
 
 void MyApp::PrintEvaluatedExpression(const string& exp) {
-  const cinder::vec2 position  = {kCenterX, texture->getSize().y +
+  const cinder::vec2 position  = {getWindowCenter().x, 
+                                  img_to_classify_texture_->getSize().y +
                                   kEvaluatedExpressionOffset};
   PrintText(exp, Color::white(), kEvaluatedExpressionSize, position);
 }

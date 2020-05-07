@@ -13,7 +13,6 @@ using std::vector;
 using ocr::Character;
 using cv::Mat;
 
-
 namespace ocr {
 /** Minimum area for a contour to be considered valid **/
 const size_t kMinContourArea = 150;
@@ -23,7 +22,6 @@ const size_t kKernelSize = 3;
 const double kNormAlpha = 0;
 /** Beta value used to normalize image after Sobel operation**/
 const double kNormBeta = 255;
-
 
 class Image {
  public:
@@ -37,8 +35,6 @@ class Image {
    * contours found in the image
    */
   vector<Character> GetCharacters();
-
-
  private:
   /** Matrix of pixels in the image **/
   Mat original_mat_;
@@ -71,8 +67,6 @@ class Image {
    * This processing makes finding contours more accurate.
    */
   void ProcessEdges();
-
-
 };
 }
 

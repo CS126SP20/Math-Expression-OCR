@@ -8,7 +8,6 @@
 using expression_evaluator::Expression;
 
 TEST_CASE("Simple operation expressions") {
-
   SECTION("Addition") {
     Expression exp("3 + 5");
     REQUIRE(exp.Evaluate() == "8.000000");
@@ -28,7 +27,6 @@ TEST_CASE("Simple operation expressions") {
     Expression exp(" 6 / 3");
     REQUIRE(exp.Evaluate() == "2.000000");
   }
-
 }
 
 TEST_CASE("Solves expression according to order of equations") {
@@ -37,7 +35,6 @@ TEST_CASE("Solves expression according to order of equations") {
 }
 
 TEST_CASE("Solves equation with grouping symbols") {
-
   SECTION("Parentheses") {
     Expression exp("5 * (3+4)");
     REQUIRE(exp.Evaluate() == "35.000000");
@@ -47,7 +44,6 @@ TEST_CASE("Solves equation with grouping symbols") {
     Expression exp("5 * [3 + 4]");
     REQUIRE(exp.Evaluate() == "35.000000");
   }
-
 }
 
 TEST_CASE("Multi digit expressions") {
@@ -55,6 +51,7 @@ TEST_CASE("Multi digit expressions") {
     Expression exp("33 + 66");
     REQUIRE(exp.Evaluate() == "99.000000");
   }
+
   SECTION("Subtraction") {
     Expression exp("66 - 33");
     REQUIRE(exp.Evaluate() == "33.000000");
@@ -86,6 +83,7 @@ TEST_CASE("Invalid expressions") {
     Expression exp("");
     REQUIRE(exp.Evaluate() == "Could not evaluate expression");
   }
+
   SECTION("Blank expression") {
     Expression exp("       ");
     REQUIRE(exp.Evaluate() == "Could not evaluate expression");

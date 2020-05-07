@@ -13,7 +13,6 @@ using std::vector;
 namespace ocr {
 
 typedef boost::bimap<char, float> LabelMap;
-
 /**
  * Vector of values to create the label bimap from
  */

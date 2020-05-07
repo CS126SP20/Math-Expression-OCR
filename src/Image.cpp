@@ -14,7 +14,6 @@ using std::invalid_argument;
 using cv::Point;
 using ocr::ProcessMatrix;
 
-
 namespace ocr {
 
 Image::Image(const string& path) {
@@ -78,5 +77,4 @@ bool Image::SortContours(const vector<cv::Point>& first,
   cv::Rect secondr = cv::boundingRect(second);
   return firstr.x < secondr.x;
 }
-
 }

@@ -4,12 +4,9 @@
 
 #include <ocr/Character.h>
 #include <ocr/TrainingData.h>
-
 #include <catch2/catch.hpp>
-#include <iostream>
 
 using ocr::TrainingData;
-
 
 string correct_training_img_path = "../../../../../../tests/assets/test_images/";
 string correct_label_path = "../../../../../../tests/assets/test_labels.txt";

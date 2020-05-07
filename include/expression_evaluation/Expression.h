@@ -7,12 +7,12 @@
 
 #include <string>
 #include <exprtk.hpp>
+
 using std::string;
 
 namespace expression_evaluator {
 
 class Expression {
-
  public:
   /**
    * Creates an expression object from a string that contains a mathematical
@@ -26,12 +26,9 @@ class Expression {
    * if the expression is invalid. Returned expression has 5 decimal places.
    */
   string Evaluate();
-
  private:
   /** String of the expression passed in to the constructor **/
   string expression_str;
 };
 }
-
-
 #endif  // FINALPROJECT_EXPRESSION_H

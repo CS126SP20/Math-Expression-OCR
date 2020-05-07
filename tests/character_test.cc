@@ -2,15 +2,9 @@
 
 #define CATCH_CONFIG_MAIN
 
-#include <cinder/Rand.h>
 #include <ocr/Character.h>
-
 #include <catch2/catch.hpp>
-#include <iostream>
-#include <opencv2/core.hpp>
-#include <opencv2/imgcodecs.hpp>
 #include <opencv2/core/types.hpp>
-#include "opencv2/imgproc/imgproc.hpp"
 
 using ocr::Character;
 using std::cout;
@@ -22,10 +16,6 @@ TEST_CASE("File path for character doesn't exist") {
 }
 
 TEST_CASE("GetFlattenedMatrix Test") {
-  //TODO:
-  // Check test cases, add more if needed
-  //Comments, whitespace and naming,
-  //Write ReadMe
   Mat simple_mat = Mat::eye(3,3,  CV_8UC1);
   Character character(simple_mat);
   Mat flattened = character.GetFlattenedMatrix();
@@ -40,7 +30,6 @@ TEST_CASE("GetFlattenedMatrix Test") {
   SECTION("Matrix has only one channel") {
     REQUIRE(flattened.channels() == 1);
   }
-
 }
 
 

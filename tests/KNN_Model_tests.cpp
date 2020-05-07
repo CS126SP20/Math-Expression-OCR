@@ -46,7 +46,7 @@ TEST_CASE("Bad image path") {
 
 TEST_CASE("Trained model has desirable accuracy") {
   KNN_Model model;
-  model.Load("../../../../../../assets/knn_resize.xml");
+  model.Load("../../../../../../assets/my_model.xml");
   TrainingData data("../../../../../../assets/test/",
       "../../../../../../assets/test_labels.txt");
   vector<LabeledCharacter> eval_chars = data.GetLabeledCharacters();

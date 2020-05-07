@@ -4,7 +4,6 @@
 #include <catch2/catch.hpp>
 #include <ocr/Image.h>
 
-
 using ocr::Image;
 
 TEST_CASE("Image of 5 characters") {

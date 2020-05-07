@@ -3,22 +3,13 @@
 //
 
 #include "ocr/matrix_utils.h"
-
 #include <ocr/Character.h>
-
-#include <opencv2/core.hpp>
-#include <opencv2/highgui.hpp>
 #include <opencv2/imgproc.hpp>
-#include <opencv2/imgproc/imgproc.hpp>
-#include <opencv2/objdetect.hpp>
 #include <opencv2/photo.hpp>
-#include <vector>
 
-using cv::HOGDescriptor;
 using cv::Point;
 using cv::Size;
 using std::vector;
-using cv::HOGDescriptor;
 
 namespace ocr {
 

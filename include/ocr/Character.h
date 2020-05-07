@@ -10,6 +10,7 @@
 
 using std::vector;
 using std::string;
+
 namespace ocr {
 
 /** Scalar representing the RGB values of the padding pixels **/
@@ -22,7 +23,6 @@ const size_t kCharacterWidth = 20;
 const size_t kCharacterHeight = 30;
 
 class Character {
-
  public:
   /**
    * Creates a character object from a training character
@@ -42,7 +42,9 @@ class Character {
   /** Matrix representing  the pixels of a character image **/
   cv::Mat character_mat_;
   /**
-   * Adds padding to a character to make sure it is square
+   * Adds padding to a character to make sure it is square in size
+   * This ensures that resizing the character will not drastically change the
+   * composition of the image.
    */
   void PadCharacter();
 };

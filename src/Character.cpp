@@ -3,16 +3,12 @@
 //
 
 #include "ocr/Character.h"
-
 #include <ocr/matrix_utils.h>
 #include <ocr/Image.h>
 #include <filesystem>
-#include <opencv2/highgui.hpp>
 #include <opencv2/imgcodecs.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
-#include <opencv2/photo.hpp>
 #include <string>
-#include <vector>
 
 using ocr::kKernelSize;
 using std::vector;
@@ -21,7 +17,6 @@ using std::invalid_argument;
 using ocr::kResizeSideLength;
 
 namespace ocr {
-
 
 Character::Character(const string& filepath) {
   if (!exists(filepath)) {
@@ -65,6 +60,5 @@ void Character::PadCharacter(){
   }
   cv::copyMakeBorder(character_mat_, character_mat_, top, bottom,
       left, right, border, kPadValue);
-
 }
 }

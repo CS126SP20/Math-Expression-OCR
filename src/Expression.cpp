@@ -6,6 +6,7 @@
 #include <exprtk.hpp>
 
 using std::to_string;
+
 namespace expression_evaluator {
 
 Expression::Expression(const string& exp) {
