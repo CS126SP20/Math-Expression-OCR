@@ -146,3 +146,7 @@ _deps
 # Don't track database files.
 # assets/*.db
 # assets/*.sqlite*
+/assets/test/
+/assets/training/
+/assets/test_labels.txt
+/assets/train_labels.txt

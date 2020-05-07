@@ -8,7 +8,7 @@ layout.
 
 **Author**: Rohini Sharma - [`rohini2@illinois.edu`](mailto:rohini2@illinois.edu)
 
-! [Alt text](assets/readme_example.png?raw=true "Example")
+![Example](assets/readme_example.png?raw=true)
 
 ##About
 Given an image of a mathematical expression, this program will identify the symbols in the image and 
