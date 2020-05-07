@@ -8,9 +8,9 @@ layout.
 
 **Author**: Rohini Sharma - [`rohini2@illinois.edu`](mailto:rohini2@illinois.edu)
 
-! [Alt text](assets/readme_example.png?raw=true "Example")
+![Example image](https://github.com/CS126SP20/final-project-rohinisharma/assets/readme_example.png)
 
-##About
+## About
 Given an image of a mathematical expression, this program will identify the symbols in the image and 
 evaluate the expression. The symbols are identified based on a default pretrained K-Nearest Neighbors model, or
 other model specified by the user. The ExprTk library is then used to evaluate the expression and return its value. 
@@ -32,7 +32,7 @@ my-projects. This project was developed in CLion on MacOS, and is not necessaril
 ## Usage
 To run this program, run the ```cinder-myapp``` executable located in the 
 ```cmake-build-debug/Debug/cinder-myapp/cinder-myapp.app/Contents/MacOS/``` directory. 
-###Training a new model
+### Training a new model
 In order to train a new KNN model, run the executable with the ```--train``` flag. Use ```--training_images``` to specify
 the directory for training images. Use ```--training_labels``` to specify the training label text file. Each image in the 
 training directory must be in the format X.JPG where X is the line number of the text file that has the 
@@ -63,11 +63,6 @@ Evaluate default expression image:
 Evaluate expression image at ```~/my_equation.jpg``` using model at ```~/my_new_model.xml```
 
 ```cinder-myapp --equation ~/my_equation.jpg --model ~/my_new_model.xml```
-
-
-
-
-
 
 
 
