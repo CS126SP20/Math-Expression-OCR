@@ -8,7 +8,7 @@ layout.
 
 **Author**: Rohini Sharma - [`rohini2@illinois.edu`](mailto:rohini2@illinois.edu)
 
-![Alt text](assets/readme_example.png?raw=true "Example")
+! [Alt text](assets/readme_example.png?raw=true "Example")
 
 ##About
 Given an image of a mathematical expression, this program will identify the symbols in the image and 
@@ -20,7 +20,7 @@ symbols with 85% accuracy:
 0, 1,  2, 3, 4, 5, 6, 7, 8, 9, +, =, -, (, ), [, ]
 
 
-##Dependencies
+## Dependencies
 - [Cinder]
 - [cmake]
 - [OpenCV]
@@ -29,7 +29,7 @@ symbols with 85% accuracy:
 Install Cinder at ~/Cinder, using the above link. Create a directory called my-projects in ~/Cinder. Clone this repo into
 my-projects. This project was developed in CLion on MacOS, and is not necessarily optimized for Windows. 
 
-##Usage
+## Usage
 To run this program, run the ```cinder-myapp``` executable located in the 
 ```cmake-build-debug/Debug/cinder-myapp/cinder-myapp.app/Contents/MacOS/``` directory. 
 ###Training a new model
